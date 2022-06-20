@@ -23,7 +23,7 @@ Remember that you can get banned even thought I haven't heard about AFK bans.
 
 ## Installation
 
-- Download this project with git or click the code button, download zip and unpack it.
+- If you don't know what git is you can [click here to download the zip](https://github.com/Pazdikan/dbd-xp-farm/archive/refs/heads/master.zip) and unpack it.
 
 ## Usage
 - Run the game, select the killer and stay on the screen with ready button.
