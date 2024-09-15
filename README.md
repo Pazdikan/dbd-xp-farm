@@ -1,32 +1,23 @@
+> [!WARNING]  
+> This script is designed for 1920x1080 display. If you are using a higher resolution display please set it to 1920x1080 in windows' display settings.
 
-# Dead by Daylight XP/Rift Farm
+# An AFK Script for Dead by Daylight
 
-In DBD you get 1 XP per second capped at 10 minutes, so this script will get you around 4950 XP (500 XP = 1 Rift Fragment) per hour (during my tests).
-
-Remember that you can get banned even thought I haven't heard about AFK bans.
-
-## Warnings
-
-**[!] This script may not work with your monitor! You can open `screenshot.png` file and change values at line 39.**
-
-**[!] You can't use your pc while using this script! The game has to be focused.**
+## Setup
+1. Download and unpack this repository
+2. Install python 3.11+
+3. Install python requirements (setup.bat, first time only):
+```
+pip install -r requirements.txt
+```
+4. Run the script (start.bat):
+```
+python run.py
+```
 
 ## Features
-
-- Auto queue
-
-## Roadmap
-
-- Statistics
-
-- Text recognition area selector.
-
-## Installation
-
-- If you don't know what git is you can [click here to download the zip](https://github.com/Pazdikan/dbd-xp-farm/archive/refs/heads/master.zip) and unpack it.
-
-## Usage
-- Run the game, select the killer and stay on the screen with ready button.
-- Run the `start.bat` file.
-
-You can bring perks like [Corrupt Intervention](https://deadbydaylight.fandom.com/wiki/Corrupt_Intervention) and [Hex: Ruin](https://deadbydaylight.fandom.com/wiki/Hex:_Ruin) to slow down the game (for full 10 minutes XP)
+- [X] Queueing
+- [X] Attacking
+- [X] Random Movement
+- [X] Total games and total XP counts
+- [ ] Different behaviour for different killers (eg. trapper = setting traps; dracula = shapeshifting) (for bloodpoints)
