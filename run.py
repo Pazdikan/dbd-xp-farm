@@ -11,15 +11,6 @@ from rich.text import Text
 
 pyautogui.FAILSAFE = False
 
-def click_image():
-    try:
-        pos = pyautogui.locateOnScreen('screenshot.png', confidence=(0.8))
-        if pos != None:
-            pyautogui.click(pos[0] + 20, pos[1])
-            time.sleep(0.5)
-    except:
-        pass
-
 lobby_button = {
     "top": 927,
     "left": 1580,
@@ -34,8 +25,28 @@ endgame_button = {
     "height": 35
 }
 
+killer_name = {
+    "top": 1000,
+    "left": 1650,
+    "width": 235,
+    "height": 35
+}
+
+State = Enum('State', ['INGAME', 'INLOBBY', 'INQUEUE'])
+
+Killer = Enum('Killer', ['OTHER', "TRAPPER"])
+
 games = 0
 xp = 0
+
+def click_image():
+    try:
+        pos = pyautogui.locateOnScreen('screenshot.png', confidence=(0.8))
+        if pos != None:
+            pyautogui.click(pos[0] + 20, pos[1])
+            time.sleep(0.5)
+    except:
+        pass
 
 def take_and_read_screenshot(area):
     screenshot = sct.grab(area)
@@ -60,11 +71,11 @@ console.clear()
 console.log(Text("Initializing..."))
 console.log(Text("! IGNORE ALL ERRORS BELOW !", style="bold black on red"))
 
-
 if __name__ == '__main__':
-    State = Enum('State', ['INGAME', 'INLOBBY', 'INQUEUE'])
+    current_state = State.INGAME
+    current_killer = Killer.OTHER
 
-    current_state = State.INLOBBY
+    game_started_at = None
 
     reader = easyocr.Reader(['en'])
 
@@ -76,11 +87,13 @@ if __name__ == '__main__':
                 ocr = take_and_read_screenshot(endgame_button)
 
                 if any("CONTINUE" in string for string in ocr):
+                    time_in_game = time.time() - game_started_at
+
                     pyautogui.click(x=465, y=871)
                     pyautogui.click(x=465, y=871)
                     pyautogui.click(x=465, y=871)
 
-                    time.sleep(5)
+                    time.sleep(15)
 
                     xp += int(take_and_read_xp_screenshot()[0])
 
@@ -93,9 +106,11 @@ if __name__ == '__main__':
                     current_state = State.INLOBBY
 
                     games += 1
+                    console.print("\n\n")
+                    console.log(Text(f" Game Time: ~{time_in_game / 60} minutes", style="black on aqua"))
+                    console.log(Text(f" XP Earned: {xp} ", style="black on yellow"))
                     console.log(Text(f" Games Played: {games} ", style="black on green"))
-                    console.log(Text(f" Total XP Earned: {xp} ", style="black on yellow"))
-
+                    console.print("\n\n")
                     console.log("Setting state to INLOBBY")
                     console.log("Waiting 30 seconds")
                     time.sleep(30)
@@ -109,6 +124,8 @@ if __name__ == '__main__':
                     pyautogui.keyUp("w")
                     time.sleep(10)
             else:
+                # When you level up your rift, the right expandable menu will be shown
+                # This moves the mouse to top left corner to close it
                 pyautogui.moveTo(0, 0)
             
                 ocr = take_and_read_screenshot(lobby_button)
@@ -129,6 +146,7 @@ if __name__ == '__main__':
                     console.log("Waiting 120 seconds")
                     time.sleep(120) # Loading from lobby to game (+ missing players etc.)
                     console.log("Finished waiting")
+                    game_started_at = time.time()
 
                 elif not ocr:                   
                     ocr = take_and_read_screenshot(endgame_button)
