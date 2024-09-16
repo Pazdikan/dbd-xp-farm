@@ -104,8 +104,16 @@ def perform_ingame_action():
             pyautogui.press("space")
     time.sleep(10)
 
+def print_stats():
+    console.print("\n\n")
+    console.log(Text(f" Game Time: ~{time_in_game / 60} minutes ", style="black on aqua"))
+    console.log(Text(f" XP Earned: {xp} ({xp / games} average) ", style="black on yellow"))
+    console.log(Text(f" Games Played: {games} ", style="black on green"))
+    console.log(Text(f" Running Time: {str(datetime.timedelta(seconds=int(time.time() - script_start_time)))} ({str(datetime.timedelta(seconds=int(total_time_in_game)))} in games; {str(datetime.timedelta(seconds=int((time.time() - script_start_time) - total_time_in_game)))} in lobby)"))
+    console.print("\n\n")
 
 console = Console()
+
 console.set_window_title("DBD Auto AFK by Pazdikan")
 console.clear()
 console.log(Text("Initializing..."))
@@ -152,12 +160,9 @@ if __name__ == '__main__':
 
                     games += 1
                     total_time_in_game += time_in_game
-                    console.print("\n\n")
-                    console.log(Text(f" Game Time: ~{time_in_game / 60} minutes ", style="black on aqua"))
-                    console.log(Text(f" XP Earned: {xp} ({xp / games} average) ", style="black on yellow"))
-                    console.log(Text(f" Games Played: {games} ", style="black on green"))
-                    console.log(Text(f" Running Time: {str(datetime.timedelta(seconds=int(time.time() - script_start_time)))} ({str(datetime.timedelta(seconds=int(total_time_in_game)))} in games; {str(datetime.timedelta(seconds=int((time.time() - script_start_time) - total_time_in_game)))} in lobby)"))
-                    console.print("\n\n")
+
+                    print_stats()
+
                     console.log("Setting state to INLOBBY")
                     console.log("Waiting 30 seconds")
                     time.sleep(30)

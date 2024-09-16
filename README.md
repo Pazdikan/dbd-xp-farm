@@ -20,4 +20,12 @@ python run.py
 - [X] Attacking
 - [X] Random Movement
 - [X] Total games and total XP counts
-- [ ] Different behaviour for different killers (eg. trapper = setting traps; dracula = shapeshifting) (for bloodpoints)
+- [X] Different behaviour for different killers (for bloodpoints)
+
+
+| Killer | Actions* |
+|--------|----------|
+| The Trapper | - Placing and picking up traps<br> |
+
+
+* All killers walk forward-backward and attack.
