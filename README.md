@@ -19,14 +19,14 @@ python run.py
 - [X] Queueing
 - [X] Attacking
 - [X] Random Movement
-- [X] Total games and total XP counts
+- [X] Statistics
 - [X] Different behaviour for different killers (for bloodpoints)
+- [ ] Settings (ui + saving)
 
 
 # Behaviors
 All killers walk forward-backward and attack. Some time ago BHVR added an anti-afk system which make you "DC" after the game (so you won't get xp and bloodpoints). You can even hit survivors, but if you didn't move an inch you will get kicked.
 
 | Killer | Actions |
-|--------|----------|
-| <img src=".github/TheTrapper.webp" alt="drawing" width="150"/> | - Placing and picking up traps<br> |
-
+|-|-|
+| <img src=".github/TheTrapper.webp" alt="drawing" width="150"/> | - Placing and picking up traps<br>
