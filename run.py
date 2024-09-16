@@ -71,31 +71,38 @@ def take_and_read_xp_screenshot():
 def perform_ingame_action():
     def walk_and_attack():
         pyautogui.keyDown("w")
-        pyautogui.mouseDown()
         time.sleep(0.5)
-        pyautogui.mouseUp()
         pyautogui.keyUp("w")
-        time.sleep(10)
+
+        pyautogui.keyDown("s")
+        time.sleep(0.5)
+        pyautogui.keyUp("s")
+
+        # Coords of the "banner" (survivor disconneted etc.); if no banner is present, it just attacks like normal
+        pyautogui.click(x=1379, y=658)
+        pyautogui.click(x=1379, y=658)
+        pyautogui.click(x=1379, y=658)
     
     def attack():
         pyautogui.mouseDown()
         time.sleep(0.5)
         pyautogui.mouseUp()
 
-    console.log(Text("fPerforming random movement as [bold red]{current_killer}[/bold red]"))
+    console.log(Text("Performing random movement as ") + Text(f"{current_killer.name}", style="bold red"))
 
     if (current_killer == Killer.OTHER):
         walk_and_attack()
     elif (current_killer == Killer.TRAPPER):
         random_action = random.randint(0, 1)
         if random_action == 0:
-            attack()
+            walk_and_attack()
         else:
             pyautogui.mouseDown(button="secondary")
             time.sleep(4)
             pyautogui.mouseUp(button="secondary")
             time.sleep(2)
             pyautogui.press("space")
+    time.sleep(10)
 
 
 console = Console()
@@ -106,8 +113,8 @@ console.log(Text("! IGNORE ALL ERRORS BELOW !", style="bold black on red"))
 
 if __name__ == '__main__':
     script_start_time = time.time()
-    current_state = State.INGAME
-    current_killer = Killer.OTHER
+    current_state = State.INLOBBY
+    current_killer = Killer.TRAPPER
 
     game_started_at = None
 
@@ -129,7 +136,11 @@ if __name__ == '__main__':
 
                     time.sleep(15)
 
-                    xp += int(take_and_read_xp_screenshot()[0])
+                    current_xp = take_and_read_xp_screenshot() 
+                    if (len(current_xp) > 0):
+                        xp += int(current_xp[0])
+                    else:
+                        xp += time_in_game * 0.8 # 1 second in game = 1 xp; but the time isnt perfect so reduce the xp
 
                     time.sleep(5)
 
