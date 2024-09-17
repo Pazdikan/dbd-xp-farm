@@ -21,7 +21,7 @@ game_started_at = None
 # CONFIGURATION FOR USERS
 # EDITING STUFF BETWEEN COMMENTS BELOW IS SAFE AND WILL NOT BREAK THE SCRIPT
 
-killer = Killer.OTHER # From the list above
+killer = Killer.TRAPPER # From the list above
 
 xp_limit = 0 # SET TO 0 TO DISABLE
 games_limit = 0 # SET TO 0 TO DISABLE

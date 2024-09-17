@@ -1,5 +1,5 @@
 # TODO:
-# - More killers: Dracula, 
+# - More killers: Dracula,
 
 import mss
 import pyautogui

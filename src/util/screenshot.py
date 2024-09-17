@@ -27,7 +27,7 @@ class Screenshot:
         "height": 35
     }    
 
-    def click_image():
+    def click_image(self):
         try:
             pos = pyautogui.locateOnScreen('screenshot.png', confidence=(0.8))
             if pos != None:

@@ -1,4 +1,4 @@
-from util.console import console
+from util.console import console, print_stats
 from rich.text import Text
 import config
 from mss import mss

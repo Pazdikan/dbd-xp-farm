@@ -1,5 +1,5 @@
 import config
-from util.console import console
+from util.console import console, print_stats
 from rich.text import Text
 from time import time, sleep
 import pyautogui
@@ -34,9 +34,9 @@ def loop():
             current_xp = config.ss.take_and_read_xp_screenshot() 
 
             if (len(current_xp) > 0):
-                xp += int(current_xp[0])
+                config.xp += int(current_xp[0])
             else:
-                xp += time_in_game * 0.8 # "Predicted" XP gain when the OCR fails
+                config.xp += time_in_game * 0.8 # "Predicted" XP gain when the OCR fails
 
             sleep(5)
 
@@ -49,7 +49,8 @@ def loop():
             config.games += 1
             config.total_time_in_game += time_in_game
             
-            console.print_stats()
+            console.log(f"{Text('Game Finished! Earned XP: {current_xp}', style='green')}")
+            print_stats()
 
             console.log("Setting state to INLOBBY")
             console.log("Waiting 30 seconds")
@@ -57,6 +58,7 @@ def loop():
             console.log("Finished waiting")
         else:
             behavior.perform_ingame_action()
+            
     else:
         # When you level up your rift, the right expandable menu will cover the play button
         # This moves the mouse to top left corner to close it

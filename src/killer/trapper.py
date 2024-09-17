@@ -10,3 +10,4 @@ def place_and_pick_trap():
     pyautogui.mouseUp(button="secondary")
     sleep(2)
     pyautogui.press("space")
+    sleep(5)
