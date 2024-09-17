@@ -18,9 +18,9 @@ This script is designed to automatically farm XP and a few bloodpoints while avo
 
 |                         | Per game | Per hour (in-game) |
 |-------------------------|----------|--------------------|
-| XP (ex. 1st game bonus) |          |                    |
+| XP (ex. 1st game bonus) | 505 avg  | 3536 avg           |
 | Bloodpoints as OTHER    |          |                    |
-| Bloodpoints as TRAPPER  |          |                    |
+| Bloodpoints as TRAPPER  | 2321 avg | 16247 avg          |
 
 
 ## Behaviors
