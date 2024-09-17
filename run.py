@@ -1,3 +1,6 @@
+# TODO:
+# - More killers: Dracula, 
+
 import mss
 import pyautogui
 import easyocr
@@ -10,6 +13,16 @@ from rich.console import Console
 from rich.text import Text
 import random
 import datetime
+
+Killer = Enum('Killer', ['OTHER', "TRAPPER"])
+
+# CONFIGURATION
+
+killer = Killer.OTHER # From the list above
+stop_after_games = 100 # Script plays about 4-5 games per hour (10 minutes in game, 5 minutes in lobby)
+stop_after_xp = 20000 # Script gets around 2000xp per hour
+
+# END OF CONFIGURATION
 
 pyautogui.FAILSAFE = False
 
@@ -27,16 +40,7 @@ endgame_button = {
     "height": 35
 }
 
-killer_name = {
-    "top": 1000,
-    "left": 1650,
-    "width": 235,
-    "height": 35
-}
-
 State = Enum('State', ['INGAME', 'INLOBBY', 'INQUEUE'])
-
-Killer = Enum('Killer', ['OTHER', "TRAPPER"])
 
 games = 0
 xp = 0
@@ -88,11 +92,11 @@ def perform_ingame_action():
         time.sleep(0.5)
         pyautogui.mouseUp()
 
-    console.log(Text("Performing random movement as ") + Text(f"{current_killer.name}", style="bold red"))
+    console.log(Text("Performing random movement as ") + Text(f"{killer.name}", style="bold red"))
 
-    if (current_killer == Killer.OTHER):
+    if (killer == Killer.OTHER):
         walk_and_attack()
-    elif (current_killer == Killer.TRAPPER):
+    elif (killer == Killer.TRAPPER):
         random_action = random.randint(0, 1)
         if random_action == 0:
             walk_and_attack()
@@ -122,8 +126,7 @@ console.log(Text("! IGNORE ALL ERRORS BELOW !", style="bold black on red"))
 if __name__ == '__main__':
     script_start_time = time.time()
     current_state = State.INLOBBY
-    current_killer = Killer.TRAPPER
-
+    
     game_started_at = None
 
     reader = easyocr.Reader(['en'])
@@ -132,6 +135,11 @@ if __name__ == '__main__':
         console.clear()
         console.log(Text("Initialized!", style="green"))
         while True:
+            if (games >= stop_after_games or xp >= stop_after_xp):
+                console.log(Text("Stopping script due XP or Games limit set in the configuration", style="green"))
+                print_stats()
+                break
+
             if (current_state == State.INGAME):
                 ocr = take_and_read_screenshot(endgame_button)
 
