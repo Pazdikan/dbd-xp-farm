@@ -18,7 +18,7 @@ def perform_ingame_action():
             trapper.place_and_pick_trap()
 
     elif (config.killer == config.Killer.BLIGHT):
-        random_action = randint(0, 4)
+        random_action = randint(0, 3)
 
         if random_action == 0:
             universal.walk_and_attack()

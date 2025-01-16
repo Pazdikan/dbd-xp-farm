@@ -7,11 +7,11 @@ def walk_and_attack():
     console.log("Universal action: Walk and attack")
 
     pyautogui.keyDown("s")
-    sleep(0.8)
+    sleep(1)
     pyautogui.keyUp("s")
 
     pyautogui.keyDown("w")
-    sleep(0.8)
+    sleep(0.5)
     pyautogui.keyUp("w")
 
     # Coords of the "banner" (survivor disconneted etc.); if no banner is present, it just attacks like normal

@@ -53,8 +53,8 @@ def loop():
             print_stats()
 
             console.log("Setting state to INLOBBY")
-            console.log("Waiting 30 seconds")
-            sleep(30)
+            console.log("Waiting 15 seconds")
+            sleep(15)
             console.log("Finished waiting")
         else:
             behavior.perform_ingame_action()
