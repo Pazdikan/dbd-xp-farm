@@ -1,0 +1,4 @@
+- gui app (overlayed above game windows?)
+- if entire app cant be overlayed, overlay only logs and stats
+
+- add to readme: cuda and pytorch installation
