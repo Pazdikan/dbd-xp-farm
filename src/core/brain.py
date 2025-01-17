@@ -1,5 +1,5 @@
 import config
-from util.console import console, print_stats
+from util.console import log, console, print_stats
 from rich.text import Text
 from time import time, sleep
 import pyautogui
@@ -7,11 +7,11 @@ import core.behavior as behavior
 
 def check_if_limit_reached():
     if (config.xp_limit > 0 and config.xp >= config.xp_limit):
-        console.log(Text("XP limit reached. The script will now turn off", style="green"))
+        log(Text("XP limit reached. The script will now turn off", style="green"))
         return True
     
     elif (config.games_limit > 0 and config.games >= config.games_limit):
-        console.log(Text("Games Played limit reached. The script will now turn off", style="green"))
+        log(Text("Games Played limit reached. The script will now turn off", style="green"))
         return True
     
     return False
@@ -44,18 +44,19 @@ def loop():
             config.ss.click_image()
             config.ss.click_image()
 
-            console.log("Clicking CONTINUE (endgame)")
+            log("Clicking CONTINUE (endgame)")
             config.current_state = config.State.INLOBBY
             config.games += 1
             config.total_time_in_game += time_in_game
             
-            console.log(f"{Text('Game Finished! Earned XP: {current_xp}', style='green')}")
+            log(f"{Text('Game Finished! Earned XP: {current_xp}', style='green')}")
+
             print_stats()
 
-            console.log("Setting state to INLOBBY")
-            console.log("Waiting 15 seconds")
+            log("Setting state to INLOBBY")
+            log("Waiting 15 seconds")
             sleep(15)
-            console.log("Finished waiting")
+            log("Finished waiting")
         else:
             behavior.perform_ingame_action()
             
@@ -70,19 +71,19 @@ def loop():
             config.ss.click_image()
             config.ss.click_image()
 
-            console.log("Clicking PLAY in main menu")
+            log("Clicking PLAY in main menu")
         elif any("READY" in string for string in ocr):
             config.ss.click_image()
             config.ss.click_image()
             config.ss.click_image()
 
-            console.log("Clicking READY in found lobby")
+            log("Clicking READY in found lobby")
             config.current_state = config.State.INGAME
-            console.log("Setting state to INGAME")
-            console.log("Waiting 120 seconds")
+            log("Setting state to INGAME")
+            log("Waiting 120 seconds")
 
             sleep(120) # Loading from lobby to game (+ missing players etc.)
-            console.log("Finished waiting")
+            log("Finished waiting")
 
             config.game_started_at = time()
         elif not ocr:                   
@@ -94,9 +95,9 @@ def loop():
                 config.ss.click_image()
                 config.ss.click_image()
 
-                console.log("Clicking CONTINUE (endgame)")
-                console.log("Waiting 30 seconds")
+                log("Clicking CONTINUE (endgame)")
+                log("Waiting 30 seconds")
                 sleep(30)
-                console.log("Finished waiting")
-        console.log("Waiting 5 seconds")
+                log("Finished waiting")
+        log("Waiting 5 seconds")
         sleep(5)

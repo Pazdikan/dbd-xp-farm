@@ -1,10 +1,10 @@
 import pyautogui
 from time import sleep
-from util.console import console
+from util.console import log, console
 from rich.text import Text
 
 def walk_and_attack():
-    console.log("Universal action: Walk and attack")
+    log("Universal action: Walk and attack")
 
     pyautogui.keyDown("s")
     sleep(1)

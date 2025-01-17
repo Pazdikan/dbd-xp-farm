@@ -1,9 +1,9 @@
 import pyautogui
 from time import sleep
-from util.console import console
+from util.console import log, console
 
 def place_and_pick_trap():
-    console.log("Trapper action: Place and pick trap")
+    log("Trapper action: Place and pick trap")
 
     pyautogui.mouseDown(button="secondary")
     sleep(4)

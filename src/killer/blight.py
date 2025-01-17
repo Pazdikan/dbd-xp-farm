@@ -1,9 +1,9 @@
 import pyautogui
 from time import sleep
-from util.console import console
+from util.console import log, console
 
 def rush():
-    console.log("Blight action: Rush")
+    log("Blight action: Rush")
 
     count = 0
     while count < 18:
@@ -15,7 +15,7 @@ def rush():
 def rush_logic():
     # for some reason pyautogui.click, rightClick etc only trigger
     # the first rush. not sure why. 
-    console.log("blight rush debug right click")
+    log("blight rush debug right click")
     pyautogui.mouseDown(button="secondary")
     sleep(0.01)
     pyautogui.mouseUp(button="secondary")
