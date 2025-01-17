@@ -12,7 +12,7 @@ This script is designed to automatically farm XP and a few bloodpoints while avo
 
 
 
-## Statistics
+<!-- ## Statistics
 
 (still gathering)
 
@@ -20,7 +20,7 @@ This script is designed to automatically farm XP and a few bloodpoints while avo
 |-------------------------|----------|--------------------|
 | XP (ex. 1st game bonus) | 505 avg  | 3536 avg           |
 | Bloodpoints as OTHER    |          |                    |
-| Bloodpoints as TRAPPER  | 2321 avg | 16247 avg          |
+| Bloodpoints as TRAPPER  | 2321 avg | 16247 avg          | -->
 
 
 ## Behaviors
@@ -31,6 +31,7 @@ All killers follow a basic movement pattern by moving back and forth. This helps
 | Killer  | Actions                        |
 |---------|--------------------------------|
 | TRAPPER | - Placing and picking up traps |
+| BLIGHT  | - Rushing                      |
 
 
 ## Setup
@@ -39,14 +40,19 @@ All killers follow a basic movement pattern by moving back and forth. This helps
 > This script is designed for 1920x1080 display. If you are using a higher resolution display please set it to 1920x1080 in windows' display settings.
 
 1. Download and unpack this repository
-2. Install python 3.11+
-3. Install python requirements (setup.bat, first time only):
+2. Install python 3.12 (3.13+ DOESN'T WORK!!!)
+3. Install NVIDIA CUDA (it does work on every GPU) from [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64). Select your Windows version, and then "local exe".
+4. After CUDA is installed, download pytorch
+```
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
+5. Install python requirements (or use setup.bat, first time only):
 ```
 pip install -r requirements.txt
 ```
-4. Run the script (start.bat):
+6. Run the script (or use start.bat):
 ```
-python run.py
+python src/main.py
 ```
 
 
