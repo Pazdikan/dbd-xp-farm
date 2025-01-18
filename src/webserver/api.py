@@ -1,28 +1,16 @@
 from flask import jsonify, request
 
 import data
-
-
-logs = [
-    "Log entry 1",
-    "Log entry 2",
-    "Log entry 3"
-]
-
-stats = [
-    "Game Started",
-    "Player 1: 100 points",
-    "Player 2: 150 points"
-]
+import overlay
 
 def init(app):
     @app.route('/api/logs', methods=['GET'])
     def get_logs():
-        return jsonify(logs)
+        return jsonify(overlay.overlay.logs)
 
     @app.route('/api/stats', methods=['GET'])
     def get_stats():
-        return jsonify(stats)
+        return jsonify({"games": data.games, "xp": data.xp, "time_in_game": data.total_time_in_game})
 
     @app.route('/api/settings', methods=['POST'])
     def update_settings():

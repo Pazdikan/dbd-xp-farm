@@ -78,7 +78,7 @@
                     <h2>Games Played:</h2>
                 </div>
 
-                <p id="rift_frag">Loading...</p>
+                <p id="stat_games_played">Loading...</p>
             </div>
             <div class="config-section">
                 <div style="display: flex; align-items: center; justify-content: center;">
@@ -86,7 +86,7 @@
                     <h2>XP:</h2>
                 </div>
 
-                <p id="rift_frag">Loading...</p>
+                <p id="stat_xp">Loading...</p>
             </div>
             <div class="config-section">
                 <div style="display: flex; align-items: center; justify-content: center;">
@@ -94,7 +94,7 @@
                     <h2>Rift Fragments:</h2>
                 </div>
 
-                <p id="rift_frag">Loading...</p>
+                <p id="stat_rift_frag">Loading...</p>
             </div>
             <div class="config-section">
                 <div style="display: flex; align-items: center; justify-content: center;">
@@ -102,7 +102,7 @@
                     <h2>Bloodpoints:</h2>
                 </div>
 
-                <p id="rift_frag">Loading...</p>
+                <p id="stat_bloodpoints">Loading...</p>
             </div>
         </div>
 
@@ -144,6 +144,19 @@
                     option.textContent = killer;
                     killerSelect.appendChild(option);
                 });
+            })
+            .catch(() => {
+                const killerSelect = document.getElementById('killer');
+                killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
+            });
+
+            fetch('/api/stats')
+            .then(response => response.json())
+            .then(stats => {
+                document.getElementById('stat_games_played').textContent = stats.games;
+                document.getElementById('stat_xp').textContent = stats.xp;
+                document.getElementById('stat_rift_frag').textContent = `~${parseFloat(stats.xp / 500).toFixed(0)} (~${parseFloat(stats.xp / 5000).toFixed(2)} rift levels)`;
+                document.getElementById('stat_bloodpoints').textContent = "Not tracked by script yet";
             })
             .catch(() => {
                 const killerSelect = document.getElementById('killer');
