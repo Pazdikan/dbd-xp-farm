@@ -37,7 +37,7 @@ def loop():
                 log(Text(f"Game finished, gained XP: {current_xp[0]}"))
                 data.xp += int(current_xp[0])
             else:
-                predicted_xp = time_in_game * 0.9
+                predicted_xp = int(time_in_game * 0.9)
                 log(Text("Failed to read XP from screenshot.", style="red"))
                 log(Text(f"Predicted XP gain: {predicted_xp}"))
                 data.xp += predicted_xp
