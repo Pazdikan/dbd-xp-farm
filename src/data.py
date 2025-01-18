@@ -12,7 +12,7 @@ from util.config import Config
 # !!! dont touch anything here bro !!!
 # !!! dont touch anything here bro !!!
 
-debug = True
+debug = False
 
 ss = None
 
