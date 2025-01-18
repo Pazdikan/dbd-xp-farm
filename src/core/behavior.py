@@ -5,24 +5,33 @@ import core.killer.universal as universal
 import core.killer.trapper as trapper
 import core.killer.blight as blight
 
+debug = True
+
 def perform_ingame_action():
     selected_killer = data.Killer[data.config.get('killer', section='general').upper()]
 
-    if (selected_killer == data.Killer.OTHER):
-        universal.walk_and_attack()
-        
-    elif (selected_killer == data.Killer.TRAPPER):
-        random_action = randint(0, 4)
+    should_perform_universal = randint(0, 2) == 0 # 33% chance to perform universal action
+
+    if (should_perform_universal):
+        random_action = randint(0, 1)
 
         if random_action == 0:
             universal.walk_and_attack()
-        else:
-            trapper.place_and_pick_trap()
 
-    elif (selected_killer == data.Killer.BLIGHT):
-        random_action = randint(0, 3)
-
-        if random_action == 0:
+        elif random_action == 1:
+            universal.attack_random_direction()
+    else:
+        if (selected_killer == data.Killer.OTHER):
             universal.walk_and_attack()
-        else:
-            blight.rush()
+
+        elif (selected_killer == data.Killer.TRAPPER):
+            random_action = randint(0, 0)
+
+            if random_action == 0:
+                trapper.place_and_pick_trap()         
+
+        elif (selected_killer == data.Killer.BLIGHT):
+            random_action = randint(0, 0)
+
+            if random_action == 0:
+                blight.rush()
