@@ -31,12 +31,16 @@ def loop():
             pyautogui.click(x=467, y=899)
 
             sleep(15)
-            current_xp = data.ss.take_and_read_xp_screenshot() 
+            current_xp = data.ss.take_and_read_xp_screenshot()
 
             if (len(current_xp) > 0):
+                log(Text(f"Game finished, gained XP: {current_xp[0]}"))
                 data.xp += int(current_xp[0])
             else:
-                data.xp += time_in_game * 0.8 # "Predicted" XP gain when the OCR fails
+                predicted_xp = time_in_game * 0.9
+                log(Text("Failed to read XP from screenshot.", style="red"))
+                log(Text(f"Predicted XP gain: {predicted_xp}"))
+                data.xp += predicted_xp
 
             sleep(5)
 

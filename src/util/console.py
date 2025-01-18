@@ -19,7 +19,7 @@ def log(text: Text):
 def get_stats():
     stats = [
         "",
-        Text(f" XP: {data.xp} total ({data.xp / data.games} avg per game)", style="black on yellow"),
+        Text(f" XP: {int(data.xp)} total ({int(data.xp / data.games)} avg per game)", style="black on yellow"),
         Text(f" Games: {data.games} played ", style="black on green"),
         Text(f" Running Time: {str(datetime.timedelta(seconds=int(time() - data.script_start_time)))} ({str(datetime.timedelta(seconds=int(data.total_time_in_game)))} in games; {str(datetime.timedelta(seconds=int((time() - data.script_start_time) - data.total_time_in_game)))} in lobby)", style="white on purple"),
         ""
