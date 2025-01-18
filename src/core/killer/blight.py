@@ -1,6 +1,6 @@
 import pyautogui
 from time import sleep
-from util.console import log, console
+from util.console import log
 
 def rush():
     log("Blight action: Rush")
@@ -14,8 +14,7 @@ def rush():
 
 def rush_logic():
     # for some reason pyautogui.click, rightClick etc only trigger
-    # the first rush. not sure why. 
-    log("blight rush debug right click")
+    # the first rush. not sure why. so i have to "hold" the button
     pyautogui.mouseDown(button="secondary")
     sleep(0.01)
     pyautogui.mouseUp(button="secondary")

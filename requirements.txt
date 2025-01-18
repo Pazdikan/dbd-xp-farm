@@ -1,5 +1,9 @@
 easyocr==1.7.1
+Flask==3.1.0
 mss==9.0.1
-Pillow==10.4.0
+Pillow==11.1.0
 PyAutoGUI==0.9.54
-rich==13.8.1
+PyQt5==5.15.11
+PyQt5_sip==12.16.1
+pywin32==308
+rich==13.9.4

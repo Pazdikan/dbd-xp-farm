@@ -10,19 +10,6 @@ This script is designed to automatically farm XP and a few bloodpoints while avo
 - **Testing Results**: Tested for 5 hours, yielding ~11,000 XP (queue times took half of that).
 
 
-
-
-<!-- ## Statistics
-
-(still gathering)
-
-|                         | Per game | Per hour (in-game) |
-|-------------------------|----------|--------------------|
-| XP (ex. 1st game bonus) | 505 avg  | 3536 avg           |
-| Bloodpoints as OTHER    |          |                    |
-| Bloodpoints as TRAPPER  | 2321 avg | 16247 avg          | -->
-
-
 ## Behaviors
 
 All killers follow a basic movement pattern by moving back and forth. This helps bypass the anti-AFK system introduced by BHVR, which disconnects you from the game if no movement is detected. You can still interact with survivors (e.g., hit them), but without any movement, after the game ends you'll be treated like you disconnected (no xp, and matchmaking ban).
@@ -58,7 +45,7 @@ python src/main.py
 
 ## Settings
 
-You can configure the script's behavior in the `src/config.py` file.
+You can configure the script's behavior at `https://localhost:5000`
 
 | Variable    | Description                                              | Values         |
 |-------------|----------------------------------------------------------|----------------|
@@ -67,8 +54,16 @@ You can configure the script's behavior in the `src/config.py` file.
 | games_limit | Script will exit after playing this many games           | 0 to disable   |
 
 
+## Images
+
+### Web panel
+![Web Panel](.github/webserver.png)
+
+### Overlay
+![Overlay](images/overlay.png)
+
 ## Bans
 
-There's no widespread evidence of players getting banned for AFK farming. Survivors often benefit from it as well (through healing, totems, etc.). 
+There's no widespread evidence of players getting banned for AFK farming. Survivors often benefit from it as well (through healing, totems, etc.) so *usually* they aren't angry.
 
 However, **I am not responsible for any bans** that may occur.

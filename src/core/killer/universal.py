@@ -1,7 +1,7 @@
+import pydirectinput
 import pyautogui
 from time import sleep
-from util.console import log, console
-from rich.text import Text
+from util.console import log
 
 def walk_and_attack():
     log("Universal action: Walk and attack")
@@ -11,7 +11,10 @@ def walk_and_attack():
     pyautogui.keyUp("s")
 
     pyautogui.keyDown("w")
-    sleep(0.5)
+    sleep(0.2)
+    pyautogui.mouseDown(button="left")
+    sleep(0.4)
+    pyautogui.mouseUp(button="left")
     pyautogui.keyUp("w")
 
     # Coords of the "banner" (survivor disconneted etc.); if no banner is present, it just attacks like normal

@@ -1,15 +1,17 @@
-import config
+import data
 from random import randint
 
-import killer.universal as universal
-import killer.trapper as trapper
-import killer.blight as blight
+import core.killer.universal as universal
+import core.killer.trapper as trapper
+import core.killer.blight as blight
 
 def perform_ingame_action():
-    if (config.killer == config.Killer.OTHER):
+    selected_killer = data.Killer[data.config.get('killer', section='general').upper()]
+
+    if (selected_killer == data.Killer.OTHER):
         universal.walk_and_attack()
         
-    elif (config.killer == config.Killer.TRAPPER):
+    elif (selected_killer == data.Killer.TRAPPER):
         random_action = randint(0, 4)
 
         if random_action == 0:
@@ -17,7 +19,7 @@ def perform_ingame_action():
         else:
             trapper.place_and_pick_trap()
 
-    elif (config.killer == config.Killer.BLIGHT):
+    elif (selected_killer == data.Killer.BLIGHT):
         random_action = randint(0, 3)
 
         if random_action == 0:

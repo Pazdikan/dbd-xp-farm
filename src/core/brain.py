@@ -1,16 +1,16 @@
-import config
-from util.console import log, console, print_stats
+import data
+from util.console import log, print_stats
 from rich.text import Text
 from time import time, sleep
 import pyautogui
 import core.behavior as behavior
 
 def check_if_limit_reached():
-    if (config.xp_limit > 0 and config.xp >= config.xp_limit):
+    if (float(data.config.get('xp_limit', section='limits')) > 0 and data.xp >= float(data.config.get('xp_limit', section='limits'))):
         log(Text("XP limit reached. The script will now turn off", style="green"))
         return True
     
-    elif (config.games_limit > 0 and config.games >= config.games_limit):
+    elif (float(data.config.get('games_limit', section='limits')) > 0 and data.games >= float(data.config.get('games_limit', section='limits'))):
         log(Text("Games Played limit reached. The script will now turn off", style="green"))
         return True
     
@@ -20,34 +20,34 @@ def loop():
     if (check_if_limit_reached()):
         quit()
 
-    if (config.current_state == config.State.INGAME):
-        ocr = config.ss.take_and_read_screenshot(config.ss.endgame_button)
+    if (data.current_state == data.State.INGAME):
+        ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
 
         if any("CONTINUE" in string for string in ocr):
-            time_in_game = time() - config.game_started_at
+            time_in_game = time() - data.game_started_at
 
             pyautogui.click(x=467, y=899)
             pyautogui.click(x=467, y=899)
             pyautogui.click(x=467, y=899)
 
             sleep(15)
-            current_xp = config.ss.take_and_read_xp_screenshot() 
+            current_xp = data.ss.take_and_read_xp_screenshot() 
 
             if (len(current_xp) > 0):
-                config.xp += int(current_xp[0])
+                data.xp += int(current_xp[0])
             else:
-                config.xp += time_in_game * 0.8 # "Predicted" XP gain when the OCR fails
+                data.xp += time_in_game * 0.8 # "Predicted" XP gain when the OCR fails
 
             sleep(5)
 
-            config.ss.click_image()
-            config.ss.click_image()
-            config.ss.click_image()
+            data.ss.click_image()
+            data.ss.click_image()
+            data.ss.click_image()
 
             log("Clicking CONTINUE (endgame)")
-            config.current_state = config.State.INLOBBY
-            config.games += 1
-            config.total_time_in_game += time_in_game
+            data.current_state = data.State.INLOBBY
+            data.games += 1
+            data.total_time_in_game += time_in_game
             
             log(f"{Text('Game Finished! Earned XP: {current_xp}', style='green')}")
 
@@ -65,35 +65,35 @@ def loop():
         # This moves the mouse to top left corner to close it
         pyautogui.moveTo(0, 0)
     
-        ocr = config.ss.take_and_read_screenshot(config.ss.lobby_button)
+        ocr = data.ss.take_and_read_screenshot(data.ss.lobby_button)
         if any("PLAY" in string for string in ocr):
-            config.ss.click_image()
-            config.ss.click_image()
-            config.ss.click_image()
+            data.ss.click_image()
+            data.ss.click_image()
+            data.ss.click_image()
 
             log("Clicking PLAY in main menu")
         elif any("READY" in string for string in ocr):
-            config.ss.click_image()
-            config.ss.click_image()
-            config.ss.click_image()
+            data.ss.click_image()
+            data.ss.click_image()
+            data.ss.click_image()
 
             log("Clicking READY in found lobby")
-            config.current_state = config.State.INGAME
+            data.current_state = data.State.INGAME
             log("Setting state to INGAME")
             log("Waiting 120 seconds")
 
             sleep(120) # Loading from lobby to game (+ missing players etc.)
             log("Finished waiting")
 
-            config.game_started_at = time()
+            data.game_started_at = time()
         elif not ocr:                   
-            ocr = config.ss.take_and_read_screenshot(config.ss.endgame_button)
+            ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
             # Sometimes the game doesn't register the click
             # Script thinks it's in main menu but game is still in endgame 
             if any("CONTINUE" in string for string in ocr):
-                config.ss.click_image()
-                config.ss.click_image()
-                config.ss.click_image()
+                data.ss.click_image()
+                data.ss.click_image()
+                data.ss.click_image()
 
                 log("Clicking CONTINUE (endgame)")
                 log("Waiting 30 seconds")
