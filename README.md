@@ -57,10 +57,10 @@ You can configure the script's behavior at `https://localhost:5000`
 ## Images
 
 ### Web panel
-![Web Panel](.github/webserver.png)
+<img src=".github/webserver.png" alt="Web Panel" width="400px">
 
 ### Overlay
-![Overlay](images/overlay.png)
+<img src=".github/overlay.png" alt="Overlay" width="100%">
 
 ## Bans
 
