@@ -56,7 +56,7 @@ pip install -r requirements.txt
 python src/main.py
 ```
 
-NOT WORKING? Check #6
+NOT WORKING? [Check this](https://github.com/Pazdikan/dbd-xp-farm/issues/6)
 
 
 ## Bans
