@@ -1,4 +1,6 @@
 import warnings
+
+import pyautogui
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 from time import sleep
@@ -17,6 +19,14 @@ import webserver.webserver as webserver
 
 console.clear()
 log(Text("Initializing...", style="green"))
+
+screen_width, screen_height = pyautogui.size()
+
+if screen_width != 1920 or screen_height != 1080:
+    log(Text("Script requires 1920x1080 resolution! Current: {}x{}".format(screen_width, screen_height), style="red"))
+    log(Text("Set your resulution to 1920x1080 in Windows display settings.", style="blue"))
+    log(Text("\n\nSorry about that, I know that's annoying. I'm too lazy to implement dynamic button positions ;<"))
+    sys.exit(1)
 
 def run_main_app():
     with mss() as sct:

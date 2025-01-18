@@ -5,9 +5,12 @@
 - **Anti-AFK Proof**: Ensures consistent actions to prevent AFK kicks.
 - **Banner-Proof**: Handles cases where survivors disconnect during loading screens.
 - **Killer Behaviors**: Implements various killer powers to maximize bloodpoints gain.
-- **XP Gain**: Achieves up to 4000 XP per hour (excluding queue times).
 - **Web Panel**: Allows you to control the script remotely.
 - **Overlay**: Shows logs and stats in game (for single monitor users <3)
+
+<!-- ## Stats
+
+<image graph of stats shown here > -->
 
 
 ## Behaviors
@@ -37,26 +40,13 @@ You can configure the script's behavior at `https://localhost:5000`
 
 ## Intallation
 
-> [!WARNING]  
-> This script is designed for 1920x1080 display. If you are using a higher resolution display please set it to 1920x1080 in windows' display settings.
-
 1. Download and unpack this repository
 2. Install python 3.12 (3.13+ DOESN'T WORK!!!)
 3. Install NVIDIA CUDA (it does work on every GPU) from [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64). Select your Windows version, and then "local exe".
-4. After CUDA is installed, download pytorch
-```
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
-```
-5. Install python requirements (or use setup.bat, first time only):
-```
-pip install -r requirements.txt
-```
-6. Run the script (or use start.bat):
-```
-python src/main.py
-```
+4. After CUDA is installed, run `setup.bat` to install dependencies
+5. Run the script using `start.bat`
 
-NOT WORKING? [Check this](https://github.com/Pazdikan/dbd-xp-farm/issues/6)
+Batch files create a virtual environment for python, so that pip packages are seperated from your main python install. This is to avoid dependency conflicts.
 
 
 ## Bans
