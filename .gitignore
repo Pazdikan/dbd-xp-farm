@@ -1,5 +1,8 @@
 screenshot.png
 last_game_xp.png
+./dbd/
+config.ini
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

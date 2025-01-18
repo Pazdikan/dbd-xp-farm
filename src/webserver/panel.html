@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pazdikan's auto AFK for DBD</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .config-section {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 0 #6200ea;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #cccccc;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #333333;
+            border-radius: 4px;
+            background-color: #2c2c2c;
+            color: #ffffff;
+        }
+
+        button {
+            background-color: #6200ea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="display: inline-block; margin-right: 20px;">Pazdikan's auto AFK for DBD</h1>
+        <iframe src="https://ghbtns.com/github-btn.html?user=pazdikan&repo=dbd-xp-farm&type=star&count=true&size=large"
+            frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="display: inline-block;">
+        </iframe>
+
+        <h2>Stats:</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="config-section">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="assets/noed.webp" alt="XP Icon" style="width: 70px; margin-right: 10px;">
+                    <h2>Games Played:</h2>
+                </div>
+
+                <p id="stat_games_played">Loading...</p>
+            </div>
+            <div class="config-section">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="assets/xp.webp" alt="XP Icon" style="width: 50px; margin-right: 10px;">
+                    <h2>XP:</h2>
+                </div>
+
+                <p id="stat_xp">Loading...</p>
+            </div>
+            <div class="config-section">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="assets/rift_frag.webp" alt="XP Icon" style="width: 50px; margin-right: 10px;">
+                    <h2>Rift Fragments:</h2>
+                </div>
+
+                <p id="stat_rift_frag">Loading...</p>
+            </div>
+            <div class="config-section">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="assets/bloodpoints.webp" alt="XP Icon" style="width: 50px; margin-right: 10px;">
+                    <h2>Bloodpoints:</h2>
+                </div>
+
+                <p id="stat_bloodpoints">Loading...</p>
+            </div>
+        </div>
+
+        <h2>Settings:</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="config-section">
+                <h2>General Settings</h2>
+                <div class="form-group">
+                    <label for="killer">Killer Selection:</label>
+                    <select id="killer" name="killer">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="config-section">
+                <h2>Limits</h2>
+                <div class="form-group">
+                    <label for="games_limit">Games Limit:</label>
+                    <input type="number" id="games_limit" name="games_limit" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="xp_limit">XP Limit:</label>
+                    <input type="number" id="xp_limit" name="xp_limit" min="0">
+                </div>
+            </div>
+        </div>
+    </div>
+    <button onclick="saveConfig()">Save Configuration</button>
+
+    <script>
+        fetch('/api/killers')
+            .then(response => response.json())
+            .then(killers => {
+                const killerSelect = document.getElementById('killer');
+                killerSelect.innerHTML = '';
+                killers.forEach(killer => {
+                    const option = document.createElement('option');
+                    option.value = killer;
+                    option.textContent = killer;
+                    killerSelect.appendChild(option);
+                });
+            })
+            .catch(() => {
+                const killerSelect = document.getElementById('killer');
+                killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
+            });
+
+            fetch('/api/stats')
+            .then(response => response.json())
+            .then(stats => {
+                document.getElementById('stat_games_played').textContent = stats.games;
+                document.getElementById('stat_xp').textContent = stats.xp;
+                document.getElementById('stat_rift_frag').textContent = `~${parseFloat(stats.xp / 500).toFixed(0)} (~${parseFloat(stats.xp / 5000).toFixed(2)} rift levels)`;
+                document.getElementById('stat_bloodpoints').textContent = "Not tracked by script yet";
+            })
+            .catch(() => {
+                const killerSelect = document.getElementById('killer');
+                killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
+            });
+
+        function saveConfig() {
+            const config = {
+                general: {
+                    killer: document.getElementById('killer').value
+                },
+                limits: {
+                    games_limit: document.getElementById('games_limit').value,
+                    xp_limit: document.getElementById('xp_limit').value
+                }
+            };
+
+            fetch('/api/settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(config)
+            });
+        }
+
+        function load_config() {
+            fetch('/api/settings', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => response.json()).then(config => {
+                document.getElementById('killer').value = config.general.killer;
+                document.getElementById('games_limit').value = config.limits.games_limit;
+                document.getElementById('xp_limit').value = config.limits.xp_limit;
+            });
+        }
+
+        load_config();
+    </script>
+</body>
+
+</html>
