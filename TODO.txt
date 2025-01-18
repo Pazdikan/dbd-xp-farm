@@ -1,6 +1,1 @@
-- gui app (overlayed above game windows?)
-- if entire app cant be overlayed, overlay only logs and stats
-
-- add to readme: cuda and pytorch installation
-
-- network error still not fixed. possible fix:  run ocr in the middle of the screen and if text detected, click through all possible "ok" button positions (player disconnected, network error, and some other error)
+- anti-banner still not fixed. possible fix: run ocr in the middle of the screen and if long text (or define all banners' text) detected, click through all possible "ok" button positions (or maybe escape key closes the banners?) (player disconnected, network error, and some other error)
