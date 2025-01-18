@@ -1,4 +1,5 @@
 import data
+import overlay
 from util.console import log, print_stats
 from rich.text import Text
 from time import time, sleep
@@ -16,7 +17,9 @@ def check_if_limit_reached():
     
     return False
 
+waiting_times = 0
 def loop():
+    global waiting_times
     if (check_if_limit_reached()):
         quit()
 
@@ -114,4 +117,11 @@ def loop():
                 sleep(30)
                 log("Finished waiting")
         log("Waiting 5 seconds")
+        waiting_times += 1
         sleep(5)
+
+        if (waiting_times >= 60):
+            log(Text("Waited for over 10 minutes... making sure script is not in main menu (experimental feature, might fail)", style="blue"))
+            waiting_times = 0
+            pyautogui.moveTo(100, 100, duration=0.25)
+            sleep(1)
