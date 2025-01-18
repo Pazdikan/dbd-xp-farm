@@ -25,7 +25,7 @@ if debug:
     current_state = State.INGAME
 
 games = 0
-xp = 1250
+xp = 0
 total_time_in_game = 0
 
 script_start_time = time()
