@@ -56,6 +56,8 @@ pip install -r requirements.txt
 python src/main.py
 ```
 
+NOT WORKING? Check #6
+
 
 ## Bans
 
