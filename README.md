@@ -1,6 +1,6 @@
 # AFK Script for Dead by Daylight
 
-This script is designed to automatically farm XP and a few bloodpoints while avoiding detection:
+## Features
 
 - **Anti-AFK Proof**: Ensures consistent actions to prevent AFK kicks.
 - **Banner-Proof**: Handles cases where survivors disconnect during loading screens.
@@ -8,7 +8,6 @@ This script is designed to automatically farm XP and a few bloodpoints while avo
 - **XP Gain**: Achieves up to 4000 XP per hour (excluding queue times).
 - **Web Panel**: Allows you to control the script remotely.
 - **Overlay**: Shows logs and stats in game (for single monitor users <3)
-- **Testing Results**: Tested for 5 hours, yielding ~11,000 XP (queue times took half of that).
 
 
 ## Behaviors
@@ -22,7 +21,21 @@ All killers follow a basic movement pattern by moving back and forth. This helps
 | BLIGHT  | - Rushing                      |
 
 
-## Setup
+## Settings
+
+You can configure the script's behavior at `https://localhost:5000`
+
+
+## Images
+
+### Web panel
+<img src=".github/webserver.png" alt="Web Panel" width="400px">
+
+### Overlay
+<img src=".github/overlay.png" alt="Overlay" width="100%">
+
+
+## Intallation
 
 > [!WARNING]  
 > This script is designed for 1920x1080 display. If you are using a higher resolution display please set it to 1920x1080 in windows' display settings.
@@ -43,19 +56,6 @@ pip install -r requirements.txt
 python src/main.py
 ```
 
-
-## Settings
-
-You can configure the script's behavior at `https://localhost:5000`
-
-
-## Images
-
-### Web panel
-<img src=".github/webserver.png" alt="Web Panel" width="400px">
-
-### Overlay
-<img src=".github/overlay.png" alt="Overlay" width="100%">
 
 ## Bans
 
