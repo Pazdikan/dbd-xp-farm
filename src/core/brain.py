@@ -20,6 +20,16 @@ def loop():
     if (check_if_limit_reached()):
         quit()
 
+    if (data.ss.check_if_banner_present()):
+        log(Text("Banner detected, trying to close it...", style="red"))
+        data.ss.close_banner()
+        sleep(5)
+        return
+    
+    if (data.ss.check_if_in_main_menu()):
+        log(Text("Main menu detected, trying to join killer lobby...", style="red"))
+        data.ss.enter_killer_lobby()
+
     if (data.current_state == data.State.INGAME):
         ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
 
