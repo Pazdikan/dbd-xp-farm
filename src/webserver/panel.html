@@ -148,6 +148,8 @@
             .catch(() => {
                 const killerSelect = document.getElementById('killer');
                 killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
+
+                load_config();
             });
 
             fetch('/api/stats')
@@ -195,8 +197,6 @@
                 document.getElementById('xp_limit').value = config.limits.xp_limit;
             });
         }
-
-        load_config();
     </script>
 </body>
 
