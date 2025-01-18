@@ -4,9 +4,10 @@ This script is designed to automatically farm XP and a few bloodpoints while avo
 
 - **Anti-AFK Proof**: Ensures consistent actions to prevent AFK kicks.
 - **Banner-Proof**: Handles cases where survivors disconnect during loading screens.
-- **Killer Behaviors**: Implements various killer strategies to maximize bloodpoints gain.
+- **Killer Behaviors**: Implements various killer powers to maximize bloodpoints gain.
 - **XP Gain**: Achieves up to 4000 XP per hour (excluding queue times).
-- **Configurable Settings**: Includes settings for customization (more to come).
+- **Web Panel**: Allows you to control the script remotely.
+- **Overlay**: Shows logs and stats in game (for single monitor users <3)
 - **Testing Results**: Tested for 5 hours, yielding ~11,000 XP (queue times took half of that).
 
 
@@ -31,7 +32,7 @@ All killers follow a basic movement pattern by moving back and forth. This helps
 3. Install NVIDIA CUDA (it does work on every GPU) from [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64). Select your Windows version, and then "local exe".
 4. After CUDA is installed, download pytorch
 ```
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 5. Install python requirements (or use setup.bat, first time only):
 ```
@@ -46,12 +47,6 @@ python src/main.py
 ## Settings
 
 You can configure the script's behavior at `https://localhost:5000`
-
-| Variable    | Description                                              | Values         |
-|-------------|----------------------------------------------------------|----------------|
-| killer      | Select the killer you're using (with custom behavior)    | OTHER, TRAPPER |
-| xp_limit    | Script will exit after gaining this much XP              | 0 to disable   |
-| games_limit | Script will exit after playing this many games           | 0 to disable   |
 
 
 ## Images
