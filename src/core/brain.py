@@ -47,8 +47,14 @@ def loop():
             current_xp = data.ss.take_and_read_xp_screenshot()
 
             if (len(current_xp) > 0):
-                log(Text(f"Game finished, gained XP: {current_xp[0]}"))
-                data.xp += int(current_xp[0])
+                current_xp_int = 0
+                try:
+                    current_xp_int = int(current_xp[0])
+                except:
+                    pass
+
+                log(Text(f"Game finished, gained XP: {current_xp_int}"))
+                data.xp += current_xp_int
             else:
                 predicted_xp = int(time_in_game * 0.9)
                 log(Text("Failed to read XP from screenshot.", style="red"))
