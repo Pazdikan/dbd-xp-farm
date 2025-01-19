@@ -1,9 +1,6 @@
 import configparser
 import json
 import os
-from rich.text import Text
-
-from util.console import log
 
 class Config:
     def __init__(self, filename='config.ini'):
@@ -33,27 +30,17 @@ class Config:
             self.config.read(self.filename)
 
     def get(self, key, default=None, section='DEFAULT'):
-        def get_default():
+        """Get a value from config by key"""
+        try:
+            return self.config[section][key]
+        except:
+            # Try to get from default config
             try:
                 value = self.default_config[section][key]
                 self.set(key, value, section)
                 return value
             except:
                 return default
-
-        """Get a value from config by key"""
-        try:
-            value = self.config[section][key]
-            if not value.strip():
-                try:
-                    return self.default_config[section][key]
-                except:
-                    log(Text(f"Key '{key}' in config.ini is empty. Default value used. "))
-                    return get_default()
-            return 
-        except:
-            get_default()
-
 
     def set(self, key, value, section='DEFAULT'):
         """Set a value in config by key"""
