@@ -17,7 +17,7 @@ debug = False
 ss = None
 
 State = Enum('State', ['INGAME', 'INLOBBY', 'INQUEUE'])
-Killer = Enum('Killer', ['OTHER', "TRAPPER", "BLIGHT"])
+Killer = Enum('Killer', ['OTHER', "TRAPPER", "BLIGHT", "DOCTOR"])
 
 current_state = State.INLOBBY
 

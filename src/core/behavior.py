@@ -1,9 +1,11 @@
+from time import time
 import data
 from random import randint
 
 import core.killer.universal as universal
 import core.killer.trapper as trapper
 import core.killer.blight as blight
+import core.killer.doctor as doctor
 
 debug = True
 
@@ -35,3 +37,12 @@ def perform_ingame_action():
 
             if random_action == 0:
                 blight.rush()
+        
+        elif (selected_killer == data.Killer.DOCTOR):
+            if (doctor.static_blast_used == None or time() - doctor.static_blast_used > 50):
+                doctor.static_blast()
+            else:
+                random_action = randint(0, 0)
+
+                if random_action == 0:
+                    doctor.shock_therapy()
