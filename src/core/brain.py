@@ -39,9 +39,9 @@ def loop():
         if any("CONTINUE" in string for string in ocr):
             time_in_game = time() - data.game_started_at
 
-            pyautogui.click(x=467, y=899)
-            pyautogui.click(x=467, y=899)
-            pyautogui.click(x=467, y=899)
+            pyautogui.click(x=472, y=899)
+            pyautogui.click(x=472, y=899)
+            pyautogui.click(x=472, y=899)
 
             sleep(15)
             current_xp = data.ss.take_and_read_xp_screenshot()
