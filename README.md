@@ -4,15 +4,17 @@
 - 🎮 **Killer-Specific Actions**: Optimized behaviors for bloodpoint farming
 - 🌐 **Web Control Panel**: Remote management interface
 - 📊 **In-Game Overlay**: Real-time stats and logging display
+- 📈 **Very Powerful**: Up to 2500xp per hour (6000xp during double xp event)
 
 ## How It Works
-The script keeps your killer moving and doing their thing to look like a real player. Each killer has their own actions they'll use - this helps rack up those sweet bloodpoints while keeping everything looking normal.
+The script keeps your killer moving and doing their thing to look like a real player. Each killer has their own actions they'll use - this helps rack up those sweet bloodpoints while keeping everything looking normal. Of course, the script is also farming XP by just being in a game (1 second = 1 xp, cap at 10 minutes)
 
 ### Supported Killers
 | Killer | Actions |
 |--------|----------|
-| TRAPPER | Trap placement and collection |
-| BLIGHT | Rush ability utilization |
+| TRAPPER | Placing and picking up traps |
+| BLIGHT | Rushing |
+| DOCTOR | Static blast and therapy shock |
 
 ## Setup Guide
 
