@@ -1,6 +1,6 @@
 ## Key Features
 - ✨ **Anti-AFK System**: Smart movement patterns to prevent disconnection
-- 🛡️ **Anti-Ban Protection**: Handles disconnections and loading screen issues
+- 🛡️ **Anti-Banner Protection**: Handles disconnections and loading screen issues
 - 🎮 **Killer-Specific Actions**: Optimized behaviors for bloodpoint farming
 - 🌐 **Web Control Panel**: Remote management interface
 - 📊 **In-Game Overlay**: Real-time stats and logging display
@@ -23,14 +23,16 @@ The script keeps your killer moving and doing their thing to look like a real pl
 ### Installation Steps
 1. Clone or download this repository
 2. Install Python 3.12
-3. Download NVIDIA CUDA from [NVIDIA's website](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64)
+3. Install NVIDIA CUDA from [NVIDIA's website](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64)
     - Select your Windows version
     - Choose "local exe" installer
 4. Execute `setup.bat` to install dependencies
 5. Launch with `start.bat`
 
 ### Configuration
-Access the web interface at `https://localhost:5000` to customize script settings.
+Access the web interface at `http://localhost:5000` to customize script settings.
+
+You can also access the web interface from a different machine, at `http://your-pc-local-ip:5000`
 
 ## Interface Screenshots
 
