@@ -144,12 +144,12 @@
                     option.textContent = killer;
                     killerSelect.appendChild(option);
                 });
+
+                load_config();
             })
             .catch(() => {
                 const killerSelect = document.getElementById('killer');
                 killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
-
-                load_config();
             });
 
             fetch('/api/stats')
