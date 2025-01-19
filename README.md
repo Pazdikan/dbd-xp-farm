@@ -1,56 +1,46 @@
-# AFK Script for Dead by Daylight
+## Key Features
+- ✨ **Anti-AFK System**: Smart movement patterns to prevent disconnection
+- 🛡️ **Anti-Ban Protection**: Handles disconnections and loading screen issues
+- 🎮 **Killer-Specific Actions**: Optimized behaviors for bloodpoint farming
+- 🌐 **Web Control Panel**: Remote management interface
+- 📊 **In-Game Overlay**: Real-time stats and logging display
 
-## Features
+## How It Works
+The script keeps your killer moving and doing their thing to look like a real player. Each killer has their own actions they'll use - this helps rack up those sweet bloodpoints while keeping everything looking normal.
 
-- **Anti-AFK Proof**: Ensures consistent actions to prevent AFK kicks.
-- **Banner-Proof**: Handles cases where survivors disconnect during loading screens.
-- **Killer Behaviors**: Implements various killer powers to maximize bloodpoints gain.
-- **Web Panel**: Allows you to control the script remotely.
-- **Overlay**: Shows logs and stats in game (for single monitor users <3)
+### Supported Killers
+| Killer | Actions |
+|--------|----------|
+| TRAPPER | Trap placement and collection |
+| BLIGHT | Rush ability utilization |
 
-<!-- ## Stats
+## Setup Guide
 
-<image graph of stats shown here > -->
+### Prerequisites
+- Python 3.12 (3.13+ not supported)
+- NVIDIA CUDA (compatible with all GPUs)
 
+### Installation Steps
+1. Clone or download this repository
+2. Install Python 3.12
+3. Download NVIDIA CUDA from [NVIDIA's website](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64)
+    - Select your Windows version
+    - Choose "local exe" installer
+4. Execute `setup.bat` to install dependencies
+5. Launch with `start.bat`
 
-## Behaviors
+### Configuration
+Access the web interface at `https://localhost:5000` to customize script settings.
 
-All killers follow a basic movement pattern by moving back and forth. This helps bypass the anti-AFK system introduced by BHVR, which disconnects you from the game if no movement is detected. You can still interact with survivors (e.g., hit them), but without any movement, after the game ends you'll be treated like you disconnected (no xp, and matchmaking ban).
+## Interface Screenshots
 
+### Control Panel
+<img src=".github/webserver.png" alt="Web Control Panel" width="400px">
 
-| Killer  | Actions                        |
-|---------|--------------------------------|
-| TRAPPER | - Placing and picking up traps |
-| BLIGHT  | - Rushing                      |
+### In-Game Display
+<img src=".github/overlay.png" alt="In-Game Overlay" width="100%">
 
+## Disclaimer
+While AFK farming hasn't led to widespread bans and can benefit other players through gameplay mechanics, use this script at your own risk. The developer assumes no responsibility for any potential account actions.
 
-## Settings
-
-You can configure the script's behavior at `https://localhost:5000`
-
-
-## Images
-
-### Web panel
-<img src=".github/webserver.png" alt="Web Panel" width="400px">
-
-### Overlay
-<img src=".github/overlay.png" alt="Overlay" width="100%">
-
-
-## Intallation
-
-1. Download and unpack this repository
-2. Install python 3.12 (3.13+ DOESN'T WORK!!!)
-3. Install NVIDIA CUDA (it does work on every GPU) from [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64). Select your Windows version, and then "local exe".
-4. After CUDA is installed, run `setup.bat` to install dependencies
-5. Run the script using `start.bat`
-
-Batch files create a virtual environment for python, so that pip packages are seperated from your main python install. This is to avoid dependency conflicts.
-
-
-## Bans
-
-There's no widespread evidence of players getting banned for AFK farming. Survivors often benefit from it as well (through healing, totems, etc.) so *usually* they aren't angry.
-
-However, **I am not responsible for any bans** that may occur.
+Note: The script uses isolated virtual environments to prevent Python package conflicts.
