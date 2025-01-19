@@ -17,4 +17,4 @@ def send_assets(path):
     return send_from_directory('assets', path)
 
 def run_webserver():
-    app.run(debug=False)
+    app.run(debug=False, host='0.0.0.0')
