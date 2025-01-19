@@ -71,7 +71,7 @@
         </iframe>
 
         <h2>Stats:</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <div class="config-section">
                 <div style="display: flex; align-items: center; justify-content: center;">
                     <img src="assets/noed.webp" alt="XP Icon" style="width: 70px; margin-right: 10px;">
@@ -107,7 +107,7 @@
         </div>
 
         <h2>Settings:</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <div class="config-section">
                 <h2>General Settings</h2>
                 <div class="form-group">
@@ -166,22 +166,50 @@
             });
 
         function saveConfig() {
+            const killer = document.getElementById('killer').value;
+            const gamesLimit = parseInt(document.getElementById('games_limit').value);
+            const xpLimit = parseInt(document.getElementById('xp_limit').value);
+
+            // Validation
+            if (!killer) {
+            alert('Please select a killer');
+            return;
+            }
+
+            if (isNaN(gamesLimit) || gamesLimit < 0) {
+            alert('Games limit must be a positive number');
+            return;
+            }
+
+            if (isNaN(xpLimit) || xpLimit < 0) {
+            alert('XP limit must be a positive number');
+            return;
+            }
+
             const config = {
-                general: {
-                    killer: document.getElementById('killer').value
-                },
-                limits: {
-                    games_limit: document.getElementById('games_limit').value,
-                    xp_limit: document.getElementById('xp_limit').value
-                }
+            general: {
+                killer: killer
+            },
+            limits: {
+                games_limit: gamesLimit,
+                xp_limit: xpLimit
+            }
             };
 
             fetch('/api/settings', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(config)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(config)
+            }).then(response => {
+            if (response.ok) {
+                alert('Settings saved successfully');
+            } else {
+                alert('Failed to save settings');
+            }
+            }).catch(() => {
+            alert('Failed to save settings');
             });
         }
 
