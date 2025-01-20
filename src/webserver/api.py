@@ -10,7 +10,7 @@ def init(app):
 
     @app.route('/api/stats', methods=['GET'])
     def get_stats():
-        return jsonify({"games": data.games, "xp": data.xp, "time_in_game": data.total_time_in_game})
+        return jsonify({"games": data.games, "xp": data.xp, "bloodpoints": data.bloodpoints, "time_in_game": data.total_time_in_game})
 
     @app.route('/api/settings', methods=['POST'])
     def update_settings():

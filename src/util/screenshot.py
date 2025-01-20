@@ -56,6 +56,17 @@ class Screenshot:
         image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
         image.save("last_game_xp.png")
         return reader.readtext("last_game_xp.png", detail=0)
+    
+    def take_and_read_bloodpoint_screenshot(self):
+        screenshot = self.sct.grab({
+            "top": 487,
+            "left": 110,
+            "width": 300,
+            "height": 50
+        })
+        image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
+        image.save("last_game_bp.png")
+        return reader.readtext("last_game_bp.png", detail=0)
 
     def check_if_banner_present(self):
         try:

@@ -26,6 +26,7 @@ if debug:
 
 games = 0
 xp = 0
+bloodpoints = 0
 total_time_in_game = 0
 
 script_start_time = time()

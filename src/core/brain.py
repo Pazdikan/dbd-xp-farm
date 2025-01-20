@@ -37,13 +37,19 @@ def loop():
         ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
 
         if any("CONTINUE" in string for string in ocr):
-            time_in_game = time() - data.game_started_at
+            if (data.game_started_at != None):
+                time_in_game = time() - data.game_started_at
+            else:
+                time_in_game = 0
 
             pyautogui.click(x=472, y=899)
             pyautogui.click(x=472, y=899)
             pyautogui.click(x=472, y=899)
+
+            log("Waiting 15 seconds for XP animation to end")
 
             sleep(15)
+            log("Trying to get XP")
             current_xp = data.ss.take_and_read_xp_screenshot()
 
             if (len(current_xp) > 0):
@@ -53,7 +59,6 @@ def loop():
                 except:
                     pass
 
-                log(Text(f"Game finished, gained XP: {current_xp_int}"))
                 data.xp += current_xp_int
             else:
                 predicted_xp = int(time_in_game * 0.9)
@@ -61,7 +66,29 @@ def loop():
                 log(Text(f"Predicted XP gain: {predicted_xp}"))
                 data.xp += predicted_xp
 
+            sleep(1)
+
+            log("Trying to get Bloodpoints")
+            pyautogui.moveTo(411, 900, duration=0.1)
+            pyautogui.click(x=411, y=900)
+            pyautogui.click(x=411, y=900)
+            pyautogui.click(x=411, y=900)
+
             sleep(5)
+
+            current_bp = data.ss.take_and_read_bloodpoint_screenshot()
+            print(current_bp)
+            if (len(current_bp) > 0):
+                current_bp_int = 0
+                try:
+                    current_bp_int = int(current_bp[0].replace(' ', ''))
+                except:
+                    pass
+
+                data.bloodpoints += current_bp_int
+
+        
+            log(f"{Text(f'Game {data.games + 1}: Earned XP: {data.xp}, BP: {data.bloodpoints}', style='green')}")
 
             data.ss.click_image()
             data.ss.click_image()
@@ -72,8 +99,6 @@ def loop():
             data.games += 1
             data.total_time_in_game += time_in_game
             
-            log(f"{Text('Game Finished! Earned XP: {current_xp}', style='green')}")
-
             print_stats()
 
             log("Setting state to INLOBBY")

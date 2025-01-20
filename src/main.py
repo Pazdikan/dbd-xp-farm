@@ -36,11 +36,9 @@ def run_main_app():
         log(Text("Access web panel via http://localhost:5000/", style="green"))
 
         while True:
-            # Get the title of the currently focused window
             window = win32gui.GetForegroundWindow()
             window_title = win32gui.GetWindowText(window)
 
-            # Check if the focused window is "DeadByDaylight-Win64-Shipping.exe" or titled "DeadByDaylight"
             if "DeadByDaylight" in window_title:
                 brain.loop()
             else:

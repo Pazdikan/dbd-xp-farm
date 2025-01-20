@@ -156,9 +156,9 @@
             .then(response => response.json())
             .then(stats => {
                 document.getElementById('stat_games_played').textContent = stats.games;
-                document.getElementById('stat_xp').textContent = stats.xp;
+                document.getElementById('stat_xp').textContent = `${stats.xp} (${parseFloat(stats.xp / stats.games).toFixed(0)} avg)`;;
                 document.getElementById('stat_rift_frag').textContent = `~${parseFloat(stats.xp / 500).toFixed(0)} (~${parseFloat(stats.xp / 5000).toFixed(2)} rift levels)`;
-                document.getElementById('stat_bloodpoints').textContent = "Not tracked by script yet";
+                document.getElementById('stat_bloodpoints').textContent = `${stats.bloodpoints} (${parseFloat(stats.bloodpoints / stats.games).toFixed(0)} avg)`;
             })
             .catch(() => {
                 const killerSelect = document.getElementById('killer');
