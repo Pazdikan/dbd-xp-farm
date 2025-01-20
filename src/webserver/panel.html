@@ -71,6 +71,10 @@
         </iframe>
 
         <h2>Stats:</h2>
+        <div style="display: flex; align-items: center; justify-content: center; ">
+            <p>Refresh in:</p>
+            <input type="range" id="countdown" value="10" min="0" max="10" disabled style="width: 200px; margin: 0 10px;">
+        </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <div class="config-section">
                 <div style="display: flex; align-items: center; justify-content: center;">
@@ -152,18 +156,21 @@
                 killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
             });
 
+        function fetch_stats() {
             fetch('/api/stats')
-            .then(response => response.json())
-            .then(stats => {
-                document.getElementById('stat_games_played').textContent = stats.games;
-                document.getElementById('stat_xp').textContent = `${stats.xp} (${parseFloat(stats.xp / stats.games).toFixed(0)} avg)`;;
-                document.getElementById('stat_rift_frag').textContent = `~${parseFloat(stats.xp / 500).toFixed(0)} (~${parseFloat(stats.xp / 5000).toFixed(2)} rift levels)`;
-                document.getElementById('stat_bloodpoints').textContent = `${stats.bloodpoints} (${parseFloat(stats.bloodpoints / stats.games).toFixed(0)} avg)`;
-            })
-            .catch(() => {
-                const killerSelect = document.getElementById('killer');
-                killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
-            });
+                .then(response => response.json())
+                .then(stats => {
+                    document.getElementById('stat_games_played').textContent = stats.games;
+                    document.getElementById('stat_xp').textContent = `${stats.xp} (${parseFloat(stats.xp / stats.games).toFixed(0)} avg)`;;
+                    document.getElementById('stat_rift_frag').textContent = `~${parseFloat(stats.xp / 500).toFixed(0)} (~${parseFloat(stats.xp / 5000).toFixed(2)} rift levels)`;
+                    document.getElementById('stat_bloodpoints').textContent = `${stats.bloodpoints} (${parseFloat(stats.bloodpoints / stats.games).toFixed(0)} avg)`;
+                })
+                .catch(() => {
+                    const killerSelect = document.getElementById('killer');
+                    killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
+                });
+        }
+        fetch_stats();
 
         function saveConfig() {
             const killer = document.getElementById('killer').value;
@@ -172,44 +179,44 @@
 
             // Validation
             if (!killer) {
-            alert('Please select a killer');
-            return;
+                alert('Please select a killer');
+                return;
             }
 
             if (isNaN(gamesLimit) || gamesLimit < 0) {
-            alert('Games limit must be a positive number');
-            return;
+                alert('Games limit must be a positive number');
+                return;
             }
 
             if (isNaN(xpLimit) || xpLimit < 0) {
-            alert('XP limit must be a positive number');
-            return;
+                alert('XP limit must be a positive number');
+                return;
             }
 
             const config = {
-            general: {
-                killer: killer
-            },
-            limits: {
-                games_limit: gamesLimit,
-                xp_limit: xpLimit
-            }
+                general: {
+                    killer: killer
+                },
+                limits: {
+                    games_limit: gamesLimit,
+                    xp_limit: xpLimit
+                }
             };
 
             fetch('/api/settings', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(config)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(config)
             }).then(response => {
-            if (response.ok) {
-                alert('Settings saved successfully');
-            } else {
-                alert('Failed to save settings');
-            }
+                if (response.ok) {
+                    alert('Settings saved successfully');
+                } else {
+                    alert('Failed to save settings');
+                }
             }).catch(() => {
-            alert('Failed to save settings');
+                alert('Failed to save settings');
             });
         }
 
@@ -225,6 +232,16 @@
                 document.getElementById('xp_limit').value = config.limits.xp_limit;
             });
         }
+
+        let countdown = 10;
+        setInterval(() => {
+            countdown--;
+            document.getElementById('countdown').value = countdown;
+            if (countdown === 0) {
+                fetch_stats();
+                countdown = 10;
+            }
+        }, 1000);
     </script>
 </body>
 
