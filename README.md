@@ -18,18 +18,7 @@ The script keeps your killer moving and doing their thing to look like a real pl
 
 ## Setup Guide
 
-### Prerequisites
-- Python 3.12 (3.13+ not supported)
-- NVIDIA CUDA (compatible with all GPUs)
-
-### Installation Steps
-1. Clone or download this repository
-2. Install Python 3.12
-3. Install NVIDIA CUDA from [NVIDIA's website](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64)
-    - Select your Windows version
-    - Choose "local exe" installer
-4. Execute `setup.bat` to install dependencies
-5. Launch with `start.bat`
+Please follow [the installation guide](GUIDE.md).
 
 ### Configuration
 Access the web interface at `http://localhost:5000` to customize script settings.
@@ -44,7 +33,20 @@ You can also access the web interface from a different machine, at `http://your-
 ### In-Game Display
 <img src=".github/overlay.png" alt="In-Game Overlay" width="100%">
 
+# Thanks
+
+### Rensora
+
+For
+- Reporting bugs and suggestions
+- Writting the [installation guide](GUIDE.md)
+
+### @Manuteaa
+
+For
+- Making the [dbd_autoSkillCheck](https://github.com/Manuteaa/dbd_autoSkillCheck) project. Because of it I decided to rewrite this script.
+
+
 ## Disclaimer
 While AFK farming hasn't led to widespread bans and can benefit other players through gameplay mechanics, use this script at your own risk. The developer assumes no responsibility for any potential account actions.
 
-Note: The script uses isolated virtual environments to prevent Python package conflicts.

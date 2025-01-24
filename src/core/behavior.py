@@ -1,4 +1,5 @@
 from time import time
+from core.killer import deathslinger, wraith
 import data
 from random import randint
 
@@ -10,9 +11,14 @@ import core.killer.doctor as doctor
 debug = True
 
 def perform_ingame_action():
-    selected_killer = data.Killer[data.config.get('killer', section='general').upper()]
-
     should_perform_universal = randint(0, 2) == 0 # 33% chance to perform universal action
+
+    if (data.debug):
+        should_perform_universal = False
+        data.selected_killer = data.Killer.DEATHSLINGER
+
+    if data.selected_killer == data.Killer.WRAITH and wraith.is_cloaked:
+        should_perform_universal = False
 
     if (should_perform_universal):
         random_action = randint(0, 1)
@@ -23,22 +29,26 @@ def perform_ingame_action():
         elif random_action == 1:
             universal.attack_random_direction()
     else:
-        if (selected_killer == data.Killer.OTHER):
+        if (data.selected_killer == data.Killer.OTHER):
             universal.walk_and_attack()
 
-        elif (selected_killer == data.Killer.TRAPPER):
+        elif (data.selected_killer == data.Killer.TRAPPER):
             random_action = randint(0, 0)
 
             if random_action == 0:
                 trapper.place_and_pick_trap()         
 
-        elif (selected_killer == data.Killer.BLIGHT):
-            random_action = randint(0, 0)
+        elif (data.selected_killer == data.Killer.BLIGHT):
+            actions = data.ss.take_and_read_actions_screenshot()
 
-            if random_action == 0:
+            if (len(actions) == 0):
+                return
+            
+            if any("RUSH" in string for string in actions):
                 blight.rush()
-        
-        elif (selected_killer == data.Killer.DOCTOR):
+                return
+                    
+        elif (data.selected_killer == data.Killer.DOCTOR):
             if (doctor.static_blast_used == None or time() - doctor.static_blast_used > 50):
                 doctor.static_blast()
             else:
@@ -46,3 +56,34 @@ def perform_ingame_action():
 
                 if random_action == 0:
                     doctor.shock_therapy()
+
+        elif (data.selected_killer == data.Killer.WRAITH):
+            random_action = randint(0, 0)
+
+            if random_action == 0:
+                actions = data.ss.take_and_read_actions_screenshot()
+
+                if (len(actions) == 0):
+                    return
+                
+                if any("UNCLOAK" in string for string in actions):
+                    wraith.uncloak()
+                    return
+                
+                if any("CLOAK" in string for string in actions):
+                    wraith.cloak()
+                    return
+                
+        elif (data.selected_killer == data.Killer.DEATHSLINGER):
+            actions = data.ss.take_and_read_actions_screenshot()
+
+            if (len(actions) == 0):
+                return
+                        
+            if any("AIM" in string for string in actions):
+                deathslinger.aim_and_shoot()
+                return
+            
+            if any("RELOAD" in string for string in actions):
+                deathslinger.reload()
+                return

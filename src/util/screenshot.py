@@ -2,10 +2,12 @@ import pyautogui
 import easyocr
 from time import sleep
 from PIL import Image
+import numpy as np
 
 import data
 from util.console import log
 from rich.text import Text
+import os
 
 pyautogui.FAILSAFE = False
 
@@ -31,11 +33,14 @@ class Screenshot:
         "height": 35
     }    
 
-    def click_image(self):
+    def click_image(self, path):
+        if not os.path.exists(path):
+            return
+
         try:
-            pos = pyautogui.locateOnScreen('screenshot.png', confidence=(0.8))
+            pos = pyautogui.locateOnScreen(path, confidence=(0.8))
             if pos != None:
-                pyautogui.click(pos[0] + 20, pos[1])
+                pyautogui.click(pos[0] + 20, pos[1] + 20)
                 sleep(0.5)
         except:
             pass
@@ -43,8 +48,7 @@ class Screenshot:
     def take_and_read_screenshot(self, area):
         screenshot = self.sct.grab(area)
         image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
-        image.save("screenshot.png")
-        return reader.readtext("screenshot.png", detail=0)
+        return reader.readtext(np.array(image), detail=0)
 
     def take_and_read_xp_screenshot(self):
         screenshot = self.sct.grab({
@@ -54,8 +58,7 @@ class Screenshot:
             "height": 35
         })
         image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
-        image.save("last_game_xp.png")
-        return reader.readtext("last_game_xp.png", detail=0)
+        return reader.readtext(np.array(image), detail=0)
     
     def take_and_read_bloodpoint_screenshot(self):
         screenshot = self.sct.grab({
@@ -65,8 +68,59 @@ class Screenshot:
             "height": 50
         })
         image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
-        image.save("last_game_bp.png")
-        return reader.readtext("last_game_bp.png", detail=0)
+        return reader.readtext(np.array(image), detail=0)
+    
+    def take_and_read_actions_screenshot(self):
+        screenshot = self.sct.grab({
+            "top": 898,
+            "left": 656,
+            "width": 800,
+            "height": 50
+        })
+        image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
+        return reader.readtext(np.array(image), detail=0)
+    
+    def take_and_read_blight_rush_number_screenshot(self):
+        screenshot = self.sct.grab({
+            "top": 892,
+            "left": 177,
+            "width": 25,
+            "height": 35
+        })
+        image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
+        image.save('screenshot.png')
+        print(reader.readtext(np.array(image), detail=0))
+    
+    def take_and_read_killer_name_screenshot(self):          
+        if (data.config.get('killer_detection', section='general') == "0"):
+            log(Text(f"Automatic killer detection is turned off", style="blue"))
+            log(Text(f"Using killer set in config: {data.config.get('killer', section='general').upper()}", style="green"))
+            return data.config.get('killer', section='general').upper()
+        else:
+            pyautogui.moveTo(x=142, y=91, duration=0.1)
+            pyautogui.click()
+
+            sleep(0.5)
+
+            screenshot = self.sct.grab({
+                "top": 35,
+                "left": 455,
+                "width": 300,
+                "height": 35
+            })
+
+            image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
+            text = reader.readtext(np.array(image), detail=0)
+
+            if len(text) > 0:
+                for killer in [killer.name for killer in data.Killer]:
+                    if str(killer).lower() in text[0].lower():
+                        log(Text(f"Detected selected killer: {killer}. Ignoring config value: {data.config.get('killer', section='general').upper()}", style="green"))
+                        log(Text(f"To turn off automatic killer detection, check out the web panel settings", style="green"))
+                        return killer
+
+            log(Text(f"Using killer set in config: {data.config.get('killer', section='general').upper()}", style="red"))
+            return data.config.get('killer', section='general').upper()
 
     def check_if_banner_present(self):
         try:
@@ -92,8 +146,11 @@ class Screenshot:
         if not data.ss.check_if_in_main_menu():
             return
         
-        pos = pyautogui.locateOnScreen('src/assets/button_play.png', confidence=0.8)
-        pyautogui.click(pos[0] + 10, pos[1] + 10)
+        try:
+            pos = pyautogui.locateOnScreen('src/assets/button_play.png', confidence=0.8)
+            pyautogui.click(pos[0] + 10, pos[1] + 10)
+        except:
+            pass
 
         sleep(2)
 

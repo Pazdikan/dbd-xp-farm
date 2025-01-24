@@ -35,7 +35,7 @@ class TransparentOverlay(QtWidgets.QWidget):
         # Set up the window (overlay)
         self.setWindowTitle("DBD AFK Logs Overlay")
         # Position the window on the left side of the screen (15% of the width and full height)
-        self.setGeometry(0, 0, int(screen_width * 0.25), screen_height)
+        self.setGeometry(0, 0, int(screen_width * 0.25), int(screen_height * 0.75))
 
         # Set the window flags (frameless, stay on top, click-through)
         self.setWindowFlags(
@@ -58,7 +58,7 @@ class TransparentOverlay(QtWidgets.QWidget):
         self.log_label.setText("\n".join(self.welcome_message))
         self.log_label.setStyleSheet("color: white; font: bold 10pt Arial; padding: 10px;")
         self.log_label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
-        self.log_label.setGeometry(10, 10, int(screen_width * 0.25) - 20, screen_height - 20)  # Adjust label to fit within the overlay
+        self.log_label.setGeometry(10, 10, int(screen_width * 0.25) - 20, int(screen_height * 0.75) - 20)  # Adjust label to fit within the overlay
 
         # Set up event filters for mouse enter and leave
         self.installEventFilter(self)
@@ -82,9 +82,9 @@ class TransparentOverlay(QtWidgets.QWidget):
         screen_width = screen.width()
         screen_height = screen.height()
         if self.is_on_left:
-            self.setGeometry(int(screen_width * 0.6), 0, int(screen_width * 0.25), screen_height)
+            self.setGeometry(int(screen_width * 0.6), 0, int(screen_width * 0.25), int(screen_height * 0.75))
         else:
-            self.setGeometry(0, 0, int(screen_width * 0.25), screen_height)
+            self.setGeometry(0, 0, int(screen_width * 0.25), int(screen_height * 0.75))
         self.is_on_left = not self.is_on_left
 
     def update_log(self, new_log):

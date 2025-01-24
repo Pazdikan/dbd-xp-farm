@@ -17,7 +17,19 @@ import win32gui
 
 import webserver.webserver as webserver
 
+def check_python_version():
+    if sys.version_info.major != 3 or sys.version_info.minor != 11:
+        print("Current Python version: " + str(sys.version_info.major) + "." + str(sys.version_info.minor))
+        print("Please run with Python 3.12.* (current: " + str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro) + ") to avoid any issues!")
+        print("If something is not working, do not complain in issues (unless you are using Python 3.12.* and this is a bug)")
+        print("You can download Python 3.12.8 from https://www.python.org/downloads/release/python-3128/")
+        print("\n\nScript will try to run in 12 seconds...")
+        sleep(12)
+
 console.clear()
+check_python_version()
+
+
 log(Text("Initializing...", style="green"))
 
 screen_width, screen_height = pyautogui.size()
@@ -45,17 +57,7 @@ def run_main_app():
                 log(Text("Script paused, because Dead by Daylight is not focused!", style="red"))
                 sleep(1)
 
-def check_python_version():
-    if sys.version_info.major != 3 or sys.version_info.minor != 12:
-        log(Text("Current Python version: " + str(sys.version_info.major) + "." + str(sys.version_info.minor), style="red"))
-        log(Text("Please run with Python 3.12 to avoid any issues!", style="red"))
-        log(Text("If something is not working, do not complain in issues (or open pull request with updates to 3.14)", style="blue"))
-        log(Text("\n\nScript will try to run in 10 seconds...", style="green"))
-        sleep(10)
-
 if __name__ == '__main__':
-    check_python_version()
-
     log(Text("Main app thread is starting...", style="green"))
     main_app_thread = threading.Thread(target=run_main_app, daemon=True)
     main_app_thread.start()

@@ -19,6 +19,13 @@ def check_if_limit_reached():
 
 waiting_times = 0
 def loop():
+    if (overlay.overlay != None):
+        if (data.config.get('overlay', section='general') == "0"):
+            overlay.overlay.set_visibility(False)
+        elif (data.config.get('overlay', section='general') == "1"):
+            overlay.overlay.set_visibility(True)
+
+
     global waiting_times
     if (check_if_limit_reached()):
         quit()
@@ -90,9 +97,7 @@ def loop():
         
             log(f"{Text(f'Game {data.games + 1}: Earned XP: {data.xp}, BP: {data.bloodpoints}', style='green')}")
 
-            data.ss.click_image()
-            data.ss.click_image()
-            data.ss.click_image()
+            data.ss.click_image("src/assets/button_continue.png")
 
             log("Clicking CONTINUE (endgame)")
             data.current_state = data.State.INLOBBY
@@ -111,19 +116,18 @@ def loop():
     else:
         # When you level up your rift, the right expandable menu will cover the play button
         # This moves the mouse to top left corner to close it
-        pyautogui.moveTo(0, 0)
+        pyautogui.moveTo(0, 0, duration=0.1)
     
         ocr = data.ss.take_and_read_screenshot(data.ss.lobby_button)
         if any("PLAY" in string for string in ocr):
-            data.ss.click_image()
-            data.ss.click_image()
-            data.ss.click_image()
+            data.ss.click_image("src/assets/button_queue.png")
 
             log("Clicking PLAY in main menu")
+
+            data.selected_killer = data.ss.take_and_read_killer_name_screenshot()
+
         elif any("READY" in string for string in ocr):
-            data.ss.click_image()
-            data.ss.click_image()
-            data.ss.click_image()
+            data.ss.click_image("src/assets/button_ready.png")
 
             log("Clicking READY in found lobby")
             data.current_state = data.State.INGAME
@@ -139,9 +143,7 @@ def loop():
             # Sometimes the game doesn't register the click
             # Script thinks it's in main menu but game is still in endgame 
             if any("CONTINUE" in string for string in ocr):
-                data.ss.click_image()
-                data.ss.click_image()
-                data.ss.click_image()
+                data.ss.click_image("src/assets/button_continue.png")
 
                 log("Clicking CONTINUE (endgame)")
                 log("Waiting 30 seconds")

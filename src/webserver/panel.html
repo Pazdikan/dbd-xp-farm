@@ -60,6 +60,11 @@
         button:hover {
             background-color: #3700b3;
         }
+
+        #logs {
+            text-align: left;
+            
+        }
     </style>
 </head>
 
@@ -110,6 +115,11 @@
             </div>
         </div>
 
+        <h2>Logs:</h2>
+        <div class="config-section" style="max-height: 200px; overflow-y: auto;">
+            <pre id="logs" style="margin: 0; white-space: pre-wrap;">Loading...</pre>
+        </div>
+
         <h2>Settings:</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <div class="config-section">
@@ -119,6 +129,14 @@
                     <select id="killer" name="killer">
                         <option value="">Loading...</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="killer">Overlay:</label>
+                    <input type="checkbox" id="overlay" name="overlay" style="width: auto;">
+                </div>
+                <div class="form-group">
+                    <label for="killer">Auto Killer Detection:</label>
+                    <input type="checkbox" id="killer_detection" name="killer_detection" style="width: auto;">
                 </div>
             </div>
             <div class="config-section">
@@ -155,6 +173,21 @@
                 const killerSelect = document.getElementById('killer');
                 killerSelect.innerHTML = '<option value="">Failed to load killers</option>';
             });
+
+        function fetch_logs() {
+            fetch('/api/logs')
+            .then(response => response.json())
+            .then(logs => {
+                const logsElement = document.getElementById('logs');
+                logsElement.textContent = logs.join('\n');
+                logsElement.scrollTop = logsElement.scrollHeight;
+            })
+            .catch(() => {
+                const logsElement = document.getElementById('logs');
+                logsElement.textContent = 'Failed to load logs';
+            });
+        }
+        fetch_logs()
 
         function fetch_stats() {
             fetch('/api/stats')
@@ -195,7 +228,9 @@
 
             const config = {
                 general: {
-                    killer: killer
+                    killer: killer,
+                    overlay: document.getElementById('overlay').checked ? "1" : "0",
+                    killer_detection: document.getElementById('killer_detection').checked ? "1" : "0"
                 },
                 limits: {
                     games_limit: gamesLimit,
@@ -227,9 +262,13 @@
                     'Content-Type': 'application/json'
                 },
             }).then(response => response.json()).then(config => {
+                console.log(config);
+
                 document.getElementById('killer').value = config.general.killer;
                 document.getElementById('games_limit').value = config.limits.games_limit;
                 document.getElementById('xp_limit').value = config.limits.xp_limit;
+                document.getElementById('overlay').checked = config.general.overlay === "1";
+                document.getElementById('killer_detection').checked = config.general.killer_detection === "1";
             });
         }
 
@@ -239,6 +278,7 @@
             document.getElementById('countdown').value = countdown;
             if (countdown === 0) {
                 fetch_stats();
+                fetch_logs();
                 countdown = 10;
             }
         }, 1000);

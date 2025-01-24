@@ -9,6 +9,11 @@ def walk_backwards():
     sleep(1)
     pyautogui.keyUp("s")
 
+def quick_attack():
+    pyautogui.mouseDown(button="left")
+    sleep(0.1)
+    pyautogui.mouseUp(button="left")
+
 def basic_attack():
     pyautogui.keyDown("w")
     sleep(0.1)

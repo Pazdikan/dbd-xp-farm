@@ -1,23 +1,16 @@
 from time import time
 from enum import Enum
 from util.config import Config
-
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
-# !!! dont touch anything here bro !!!
+import sys
 
 debug = False
+
+debug = any(arg in ('--debug', '-d') for arg in sys.argv)
 
 ss = None
 
 State = Enum('State', ['INGAME', 'INLOBBY', 'INQUEUE'])
-Killer = Enum('Killer', ['OTHER', "TRAPPER", "BLIGHT", "DOCTOR"])
+Killer = Enum('Killer', ['OTHER', "TRAPPER", "BLIGHT", "DOCTOR", "WRAITH", "DEATHSLINGER"])
 
 current_state = State.INLOBBY
 
@@ -33,3 +26,5 @@ script_start_time = time()
 game_started_at = None
 
 config = Config()
+
+selected_killer = Killer.OTHER
