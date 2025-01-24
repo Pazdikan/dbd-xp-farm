@@ -27,4 +27,4 @@ game_started_at = None
 
 config = Config()
 
-selected_killer = Killer.OTHER
+selected_killer = config.get('killer', section='general').upper()

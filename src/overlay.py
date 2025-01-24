@@ -72,6 +72,12 @@ class TransparentOverlay(QtWidgets.QWidget):
         else:
             QtCore.QTimer.singleShot(0, self.show)
 
+    def check_if_enabled(self):
+        if (data.config.get('overlay', section='general') == "0"):
+            self.set_visibility(False)
+        elif (data.config.get('overlay', section='general') == "1"):
+            self.set_visibility(True)
+
     def eventFilter(self, source, event):
         if event.type() == QtCore.QEvent.Enter:
             self.switch_position()
@@ -122,5 +128,10 @@ def run_overlay():
     app = QtWidgets.QApplication(sys.argv)
     overlay = TransparentOverlay()
     overlay.show()
+
+    # Create a timer to update the window every second
+    timer = QtCore.QTimer()
+    timer.timeout.connect(overlay.check_if_enabled)
+    timer.start(1000)  # 1000ms = 1 second
     
     sys.exit(app.exec_())

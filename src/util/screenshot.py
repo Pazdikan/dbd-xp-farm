@@ -88,8 +88,7 @@ class Screenshot:
             "height": 35
         })
         image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
-        image.save('screenshot.png')
-        print(reader.readtext(np.array(image), detail=0))
+        return reader.readtext(np.array(image), detail=0)
     
     def take_and_read_killer_name_screenshot(self):          
         if (data.config.get('killer_detection', section='general') == "0"):

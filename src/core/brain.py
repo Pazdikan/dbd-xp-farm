@@ -19,13 +19,6 @@ def check_if_limit_reached():
 
 waiting_times = 0
 def loop():
-    if (overlay.overlay != None):
-        if (data.config.get('overlay', section='general') == "0"):
-            overlay.overlay.set_visibility(False)
-        elif (data.config.get('overlay', section='general') == "1"):
-            overlay.overlay.set_visibility(True)
-
-
     global waiting_times
     if (check_if_limit_reached()):
         quit()
@@ -84,7 +77,6 @@ def loop():
             sleep(5)
 
             current_bp = data.ss.take_and_read_bloodpoint_screenshot()
-            print(current_bp)
             if (len(current_bp) > 0):
                 current_bp_int = 0
                 try:

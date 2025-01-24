@@ -9,7 +9,7 @@ def rush():
     log("Blight action: Rush")
 
     actions = data.ss.take_and_read_actions_screenshot()
-    
+
     if (len(actions) == 0):
         return
             
