@@ -76,10 +76,6 @@
         </iframe>
 
         <h2>Stats:</h2>
-        <div style="display: flex; align-items: center; justify-content: center; ">
-            <p>Refresh in:</p>
-            <input type="range" id="countdown" value="10" min="0" max="10" disabled style="width: 200px; margin: 0 10px;">
-        </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
             <div class="config-section">
                 <div style="display: flex; align-items: center; justify-content: center;">
@@ -272,15 +268,9 @@
             });
         }
 
-        let countdown = 10;
         setInterval(() => {
-            countdown--;
-            document.getElementById('countdown').value = countdown;
-            if (countdown === 0) {
-                fetch_stats();
-                fetch_logs();
-                countdown = 10;
-            }
+            fetch_stats();
+            fetch_logs();
         }, 1000);
     </script>
 </body>
