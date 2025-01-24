@@ -18,7 +18,7 @@ import win32gui
 import webserver.webserver as webserver
 
 def check_python_version():
-    if sys.version_info.major != 3 or sys.version_info.minor != 11:
+    if sys.version_info.major != 3 or sys.version_info.minor != 12:
         print("Current Python version: " + str(sys.version_info.major) + "." + str(sys.version_info.minor))
         print("Please run with Python 3.12.* (current: " + str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro) + ") to avoid any issues!")
         print("If something is not working, do not complain in issues (unless you are using Python 3.12.* and this is a bug)")
