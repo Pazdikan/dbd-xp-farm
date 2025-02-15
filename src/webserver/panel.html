@@ -65,6 +65,20 @@
             text-align: left;
             height: fit-content;
         }
+
+        .wide {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 600px) {
+            div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+            .wide {
+                grid-column: span 1;
+            }
+        }
+
     </style>
 </head>
 
@@ -93,21 +107,19 @@
 
                 <p id="stat_xp">Loading...</p>
             </div>
-            <div class="config-section">
-                <div style="display: flex; align-items: center; justify-content: center;">
-                    <img src="assets/rift_frag.webp" alt="XP Icon" style="width: 50px; margin-right: 10px;">
-                    <h2>Rift Fragments:</h2>
-                </div>
-
-                <p id="stat_rift_frag">Loading...</p>
-            </div>
-            <div class="config-section">
-                <div style="display: flex; align-items: center; justify-content: center;">
-                    <img src="assets/bloodpoints.webp" alt="XP Icon" style="width: 50px; margin-right: 10px;">
-                    <h2>Bloodpoints:</h2>
-                </div>
-
-                <p id="stat_bloodpoints">Loading...</p>
+            <div class="config-section wide">
+                <table style="width: 100%">
+                    <tr style="height: 50px;">
+                        <th style="width: 33.33%"><img src="assets/rift_frag.webp" alt="Rift Fragment" style="width: 50px;"></th>
+                        <th style="width: 33.33%"><img src="assets/bloodpoints.webp" alt="Bloodpoints" style="width: 50px;"></th>
+                        <th style="width: 33.33%"><img src="assets/irishard.webp" alt="Iri Shards" style="width: 50px;"></th>
+                    </tr>
+                    <tr>
+                        <td><p id="stat_rift_frag">...</p></td>
+                        <td><p id="stat_bloodpoints">...</p></td>
+                        <td><p id="stat_irishards">...</p></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
@@ -190,9 +202,10 @@
                 .then(response => response.json())
                 .then(stats => {
                     document.getElementById('stat_games_played').textContent = stats.games;
-                    document.getElementById('stat_xp').textContent = `${stats.xp} (${parseFloat(stats.xp / stats.games).toFixed(0)} avg)`;;
-                    document.getElementById('stat_rift_frag').textContent = `~${parseFloat(stats.xp / 500).toFixed(0)} (~${parseFloat(stats.xp / 5000).toFixed(2)} rift levels)`;
-                    document.getElementById('stat_bloodpoints').textContent = `${stats.bloodpoints} (${parseFloat(stats.bloodpoints / stats.games).toFixed(0)} avg)`;
+                    document.getElementById('stat_xp').textContent = `${stats.xp}${parseFloat(stat_xp) === NaN ? `  (${parseFloat(stats.bloodpoints / stats.games).toFixed(0)} avg)` : ``}`;;
+                    document.getElementById('stat_rift_frag').innerHTML = `~${parseFloat(stats.xp / 500).toFixed(0)}<br>(~${parseFloat(stats.xp / 5000).toFixed(1)} rift lvls)`;
+                    document.getElementById('stat_bloodpoints').textContent = `${stats.bloodpoints}`;
+                    document.getElementById('stat_irishards').textContent = `${stats.iri_shards}`;
                 })
                 .catch(() => {
                     const killerSelect = document.getElementById('killer');

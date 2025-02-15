@@ -5,12 +5,14 @@ import sys
 
 debug = False
 
-debug = any(arg in ('--debug', '-d') for arg in sys.argv)
+debug = any(arg in ("--debug", "-d") for arg in sys.argv)
 
 ss = None
 
-State = Enum('State', ['INGAME', 'INLOBBY', 'INQUEUE'])
-Killer = Enum('Killer', ['OTHER', "TRAPPER", "BLIGHT", "DOCTOR", "WRAITH", "DEATHSLINGER"])
+State = Enum("State", ["INGAME", "INLOBBY", "INQUEUE"])
+Killer = Enum(
+    "Killer", ["OTHER", "TRAPPER", "BLIGHT", "DOCTOR", "WRAITH", "DEATHSLINGER"]
+)
 
 current_state = State.INLOBBY
 
@@ -20,6 +22,8 @@ if debug:
 games = 0
 xp = 0
 bloodpoints = 0
+starting_iri_shards = 0
+iri_shards = 0
 total_time_in_game = 0
 
 script_start_time = time()
@@ -27,4 +31,4 @@ game_started_at = None
 
 config = Config()
 
-selected_killer = config.get('killer', section='general').upper()
+selected_killer = config.get("killer", section="general").upper()

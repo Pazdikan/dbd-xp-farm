@@ -6,38 +6,51 @@ from time import time, sleep
 import pyautogui
 import core.behavior as behavior
 
+
 def check_if_limit_reached():
-    if (float(data.config.get('xp_limit', section='limits')) > 0 and data.xp >= float(data.config.get('xp_limit', section='limits'))):
+    if float(data.config.get("xp_limit", section="limits")) > 0 and data.xp >= float(
+        data.config.get("xp_limit", section="limits")
+    ):
         log(Text("XP limit reached. The script will now turn off", style="green"))
         return True
-    
-    elif (float(data.config.get('games_limit', section='limits')) > 0 and data.games >= float(data.config.get('games_limit', section='limits'))):
-        log(Text("Games Played limit reached. The script will now turn off", style="green"))
+
+    elif float(
+        data.config.get("games_limit", section="limits")
+    ) > 0 and data.games >= float(data.config.get("games_limit", section="limits")):
+        log(
+            Text(
+                "Games Played limit reached. The script will now turn off",
+                style="green",
+            )
+        )
         return True
-    
+
     return False
 
+
 waiting_times = 0
+
+
 def loop():
     global waiting_times
-    if (check_if_limit_reached()):
+    if check_if_limit_reached():
         quit()
 
-    if (data.ss.check_if_banner_present()):
+    if data.ss.check_if_banner_present():
         log(Text("Banner detected, trying to close it...", style="red"))
         data.ss.close_banner()
         sleep(5)
         return
-    
-    if (data.ss.check_if_in_main_menu()):
+
+    if data.ss.check_if_in_main_menu():
         log(Text("Main menu detected, trying to join killer lobby...", style="red"))
         data.ss.enter_killer_lobby()
 
-    if (data.current_state == data.State.INGAME):
+    if data.current_state == data.State.INGAME:
         ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
 
         if any("CONTINUE" in string for string in ocr):
-            if (data.game_started_at != None):
+            if data.game_started_at != None:
                 time_in_game = time() - data.game_started_at
             else:
                 time_in_game = 0
@@ -52,7 +65,7 @@ def loop():
             log("Trying to get XP")
             current_xp = data.ss.take_and_read_xp_screenshot()
 
-            if (len(current_xp) > 0):
+            if len(current_xp) > 0:
                 current_xp_int = 0
                 try:
                     current_xp_int = int(current_xp[0])
@@ -77,17 +90,18 @@ def loop():
             sleep(5)
 
             current_bp = data.ss.take_and_read_bloodpoint_screenshot()
-            if (len(current_bp) > 0):
+            if len(current_bp) > 0:
                 current_bp_int = 0
                 try:
-                    current_bp_int = int(current_bp[0].replace(' ', ''))
+                    current_bp_int = int(current_bp[0].replace(" ", ""))
                 except:
                     pass
 
                 data.bloodpoints += current_bp_int
 
-        
-            log(f"{Text(f'Game {data.games + 1}: Earned XP: {data.xp}, BP: {data.bloodpoints}', style='green')}")
+            log(
+                f"{Text(f'Game {data.games + 1}: Earned XP: {data.xp}, BP: {data.bloodpoints}', style='green')}"
+            )
 
             data.ss.click_image("src/assets/button_continue.png")
 
@@ -95,7 +109,7 @@ def loop():
             data.current_state = data.State.INLOBBY
             data.games += 1
             data.total_time_in_game += time_in_game
-            
+
             print_stats()
 
             log("Setting state to INLOBBY")
@@ -104,21 +118,37 @@ def loop():
             log("Finished waiting")
         else:
             behavior.perform_ingame_action()
-            
+
     else:
         # When you level up your rift, the right expandable menu will cover the play button
-        # This moves the mouse to top left corner to close it
-        pyautogui.moveTo(0, 0, duration=0.1)
-    
+        # This moves the mouse on it, then off it, which hides the menu
+        pyautogui.moveTo(1590, 932, duration=0.5)
+        pyautogui.moveTo(0, 0, duration=0.5)
+
         ocr = data.ss.take_and_read_screenshot(data.ss.lobby_button)
         if any("PLAY" in string for string in ocr):
             data.ss.click_image("src/assets/button_queue.png")
 
             log("Clicking PLAY in main menu")
 
+            if data.starting_iri_shards == 0:
+                data.starting_iri_shards = data.ss.take_and_read_iri_shards_screenshot()
+
+            current_shards = data.ss.take_and_read_iri_shards_screenshot()
+
+            if current_shards > 0:
+                if data.iri_shards < current_shards:
+                    data.iri_shards = data.starting_iri_shards - current_shards
+
             data.selected_killer = data.ss.take_and_read_killer_name_screenshot()
 
+            print(
+                f"Starting Iri Shards: {data.starting_iri_shards}, Iri Shards: {data.iri_shards}"
+            )
+
         elif any("READY" in string for string in ocr):
+            pyautogui.moveTo(0, 0, duration=0.1)
+            sleep(0.2)
             data.ss.click_image("src/assets/button_ready.png")
 
             log("Clicking READY in found lobby")
@@ -126,14 +156,14 @@ def loop():
             log("Setting state to INGAME")
             log("Waiting 120 seconds")
 
-            sleep(120) # Loading from lobby to game (+ missing players etc.)
+            sleep(120)  # Loading from lobby to game (+ missing players etc.)
             log("Finished waiting")
 
             data.game_started_at = time()
-        elif not ocr:                   
+        elif not ocr:
             ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
             # Sometimes the game doesn't register the click
-            # Script thinks it's in main menu but game is still in endgame 
+            # Script thinks it's in main menu but game is still in endgame
             if any("CONTINUE" in string for string in ocr):
                 data.ss.click_image("src/assets/button_continue.png")
 
@@ -145,8 +175,13 @@ def loop():
         waiting_times += 1
         sleep(5)
 
-        if (waiting_times >= 60):
-            log(Text("Waited for over 10 minutes... making sure script is not in main menu (experimental feature, might fail)", style="blue"))
+        if waiting_times >= 60:
+            log(
+                Text(
+                    "Waited for over 10 minutes... making sure script is not in main menu (experimental feature, might fail)",
+                    style="blue",
+                )
+            )
             waiting_times = 0
             pyautogui.moveTo(100, 100, duration=0.25)
             sleep(1)
