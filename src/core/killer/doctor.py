@@ -4,6 +4,7 @@ from util.console import log
 
 static_blast_used = None
 
+
 def static_blast():
     log("Doctor action: Static Shock")
 
@@ -15,6 +16,7 @@ def static_blast():
     pyautogui.keyUp("ctrlleft")
 
     sleep(3)
+
 
 def shock_therapy():
     log("Doctor action: Shock Therapy")

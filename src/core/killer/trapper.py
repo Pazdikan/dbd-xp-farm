@@ -2,6 +2,7 @@ import pyautogui
 from time import sleep
 from util.console import log
 
+
 def place_and_pick_trap():
     log("Trapper action: Place and pick trap")
 

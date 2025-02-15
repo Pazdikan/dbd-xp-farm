@@ -6,6 +6,7 @@ from util.console import log
 
 is_cloaked = True
 
+
 def cloak():
     log("Wraith action: Cloak")
 
@@ -16,6 +17,7 @@ def cloak():
     is_cloaked = True
 
     sleep(3)
+
 
 def uncloak():
     log("Wraith action: Uncloak")

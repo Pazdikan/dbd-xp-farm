@@ -12,8 +12,9 @@ from util import console
 
 overlay = None
 
+
 # PyQt5 Transparent Overlay for Logs
-class TransparentOverlay(QtWidgets.QWidget):    
+class TransparentOverlay(QtWidgets.QWidget):
     welcome_message = [
         "Welcome to Pazdikan's auto AFK script for DBD",
         "This is an overlay, so you don't have to alt tab to see stats",
@@ -24,7 +25,7 @@ class TransparentOverlay(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        
+
         self.logs = []
         self.shouldBeRendered = True
 
@@ -39,26 +40,31 @@ class TransparentOverlay(QtWidgets.QWidget):
 
         # Set the window flags (frameless, stay on top, click-through)
         self.setWindowFlags(
-            QtCore.Qt.FramelessWindowHint |
-            QtCore.Qt.WindowStaysOnTopHint |
-            QtCore.Qt.Tool |
-            QtCore.Qt.X11BypassWindowManagerHint
+            QtCore.Qt.FramelessWindowHint
+            | QtCore.Qt.WindowStaysOnTopHint
+            | QtCore.Qt.Tool
+            | QtCore.Qt.X11BypassWindowManagerHint
         )
-
 
         # Set window attributes for transparency and click-through
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)  # Makes window click-through
-        
+        self.setAttribute(
+            QtCore.Qt.WA_TransparentForMouseEvents
+        )  # Makes window click-through
+
         # Set the background color (fully transparent background)
         self.setStyleSheet("background: rgba(0, 0, 0, 100);")  # Fully transparent
 
         # Create a label to show logs (in this case, use a non-transparent background)
         self.log_label = QtWidgets.QLabel(self)
         self.log_label.setText("\n".join(self.welcome_message))
-        self.log_label.setStyleSheet("color: white; font: bold 10pt Arial; padding: 10px;")
+        self.log_label.setStyleSheet(
+            "color: white; font: bold 10pt Arial; padding: 10px;"
+        )
         self.log_label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
-        self.log_label.setGeometry(10, 10, int(screen_width * 0.25) - 20, int(screen_height * 0.75) - 20)  # Adjust label to fit within the overlay
+        self.log_label.setGeometry(
+            10, 10, int(screen_width * 0.25) - 20, int(screen_height * 0.75) - 20
+        )  # Adjust label to fit within the overlay
 
         # Set up event filters for mouse enter and leave
         self.installEventFilter(self)
@@ -66,16 +72,16 @@ class TransparentOverlay(QtWidgets.QWidget):
 
     def set_visibility(self, visibility):
         self.shouldBeRendered = visibility
-        
+
         if not self.shouldBeRendered:
             QtCore.QTimer.singleShot(0, self.hide)
         else:
             QtCore.QTimer.singleShot(0, self.show)
 
     def check_if_enabled(self):
-        if (data.config.get('overlay', section='general') == "0"):
+        if data.config.get("overlay", section="general") == "0":
             self.set_visibility(False)
-        elif (data.config.get('overlay', section='general') == "1"):
+        elif data.config.get("overlay", section="general") == "1":
             self.set_visibility(True)
 
     def eventFilter(self, source, event):
@@ -88,14 +94,19 @@ class TransparentOverlay(QtWidgets.QWidget):
         screen_width = screen.width()
         screen_height = screen.height()
         if self.is_on_left:
-            self.setGeometry(int(screen_width * 0.6), 0, int(screen_width * 0.25), int(screen_height * 0.75))
+            self.setGeometry(
+                int(screen_width * 0.6),
+                0,
+                int(screen_width * 0.25),
+                int(screen_height * 0.75),
+            )
         else:
             self.setGeometry(0, 0, int(screen_width * 0.25), int(screen_height * 0.75))
         self.is_on_left = not self.is_on_left
 
     def update_log(self, new_log):
         """Update the log displayed on the overlay."""
-        
+
         if len(self.logs) >= 45:
             self.logs.pop(0)
 
@@ -104,14 +115,16 @@ class TransparentOverlay(QtWidgets.QWidget):
             # Extract existing count if present
             last_entry = self.logs[-1]
             if "(x" in last_entry:
-                count = int(last_entry[last_entry.find("(x")+2:last_entry.find(")")])
+                count = int(
+                    last_entry[last_entry.find("(x") + 2 : last_entry.find(")")]
+                )
                 self.logs[-1] = f"{new_log} (x{count+1})"
             else:
                 self.logs[-1] = f"{new_log} (x2)"
         else:
             self.logs.append(new_log)
 
-        if (data.games > 0):
+        if data.games > 0:
             pure_stats = []
             for stat in console.get_stats():
                 if isinstance(stat, rich.text.Text):
@@ -120,7 +133,10 @@ class TransparentOverlay(QtWidgets.QWidget):
                     pure_stats.append(stat)
             self.log_label.setText(f"{'\n'.join(pure_stats)}\n\n{'\n'.join(self.logs)}")
         else:
-            self.log_label.setText(f"{'\n'.join(self.welcome_message)}\n\n{'\n'.join(self.logs)}")
+            self.log_label.setText(
+                f"{'\n'.join(self.welcome_message)}\n\n{'\n'.join(self.logs)}"
+            )
+
 
 # Thread for running the PyQt5 overlay
 def run_overlay():
@@ -133,5 +149,5 @@ def run_overlay():
     timer = QtCore.QTimer()
     timer.timeout.connect(overlay.check_if_enabled)
     timer.start(1000)  # 1000ms = 1 second
-    
+
     sys.exit(app.exec_())

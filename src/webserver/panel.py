@@ -2,10 +2,10 @@ import os
 
 
 def init(app):
-    @app.route('/')
+    @app.route("/")
     def index():
         try:
-            with open('src/webserver/panel.html', 'r') as file:
+            with open("src/webserver/panel.html", "r") as file:
                 return file.read()
         except FileNotFoundError as e:
             print(f"Error: {e}")
