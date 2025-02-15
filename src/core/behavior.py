@@ -39,7 +39,7 @@ def perform_ingame_action():
             if random_action == 0:
                 trapper.place_and_pick_trap()
 
-        elif data.selected_killer == data.Killer.BLIGHT:
+        elif data.selected_killer == data.Killer.BLIGHT.name:
             random_action = randint(0, 0)
 
             if random_action == 0:
