@@ -22,6 +22,7 @@ def perform_ingame_action():
     if data.selected_killer == data.Killer.WRAITH and wraith.is_cloaked:
         should_perform_universal = False
 
+    # to prevent bad rng never moving the killer for 10 minutes (actually happened)
     global custom_actions
     if custom_actions >= 5:
         should_perform_universal = True
