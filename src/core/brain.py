@@ -138,13 +138,9 @@ def loop():
 
             if current_shards > 0:
                 if data.iri_shards < current_shards:
-                    data.iri_shards = data.starting_iri_shards - current_shards
+                    data.iri_shards = current_shards - data.starting_iri_shards
 
             data.selected_killer = data.ss.take_and_read_killer_name_screenshot()
-
-            print(
-                f"Starting Iri Shards: {data.starting_iri_shards}, Iri Shards: {data.iri_shards}"
-            )
 
         elif any("READY" in string for string in ocr):
             pyautogui.moveTo(0, 0, duration=0.1)
