@@ -142,8 +142,13 @@ class Screenshot:
 
     def close_banner(self):
         try:
-            pos = pyautogui.locateOnScreen("src/assets/button_ok.png", confidence=0.8)
-            pyautogui.click(pos[0] + 10, pos[1] + 10)
+            pos = pyautogui.locateOnScreen("src/assets/button_ok.png", confidence=(0.8))
+            if pos != None:
+                pyautogui.moveTo(pos[0] + 20, pos[1] + 20, duration=0.25)
+                pyautogui.mouseDown(button="left")
+                sleep(0.05)
+                pyautogui.mouseUp(button="left")
+                sleep(0.5)
         except:
             pass
 
