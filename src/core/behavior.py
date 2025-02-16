@@ -9,6 +9,7 @@ import core.killer.blight as blight
 import core.killer.doctor as doctor
 
 debug = True
+custom_actions = 0
 
 
 def perform_ingame_action():
@@ -21,6 +22,11 @@ def perform_ingame_action():
     if data.selected_killer == data.Killer.WRAITH and wraith.is_cloaked:
         should_perform_universal = False
 
+    global custom_actions
+    if custom_actions >= 5:
+        should_perform_universal = True
+        custom_actions = 0
+
     if should_perform_universal:
         random_action = randint(0, 1)
 
@@ -30,6 +36,8 @@ def perform_ingame_action():
         elif random_action == 1:
             universal.attack_random_direction()
     else:
+        custom_actions += 1
+
         if data.selected_killer == data.Killer.OTHER.name:
             universal.walk_and_attack()
 
