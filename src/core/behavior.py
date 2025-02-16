@@ -14,9 +14,9 @@ debug = True
 def perform_ingame_action():
     should_perform_universal = randint(0, 4) == 0
 
-    if data.debug:
-        should_perform_universal = False
-        data.selected_killer = data.Killer.BLIGHT.name
+    # if data.debug:
+    #     should_perform_universal = False
+    #     data.selected_killer = data.Killer.BLIGHT.name
 
     if data.selected_killer == data.Killer.WRAITH and wraith.is_cloaked:
         should_perform_universal = False
