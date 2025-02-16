@@ -6,7 +6,9 @@ from time import time
 import data
 import overlay
 
-console = Console()
+console = Console(
+    file=open("log.txt", "w"),
+)
 
 
 def log(text: Text):
