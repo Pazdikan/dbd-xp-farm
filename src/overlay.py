@@ -11,6 +11,7 @@ import data
 from util import console
 
 overlay = None
+show_welcome_message = True
 
 
 # PyQt5 Transparent Overlay for Logs
@@ -124,14 +125,23 @@ class TransparentOverlay(QtWidgets.QWidget):
         else:
             self.logs.append(new_log)
 
-        if data.games > 0:
+        global show_welcome_message
+        if data.current_state == data.State.PREGAME:
+            show_welcome_message = False
+
+        if not show_welcome_message:
             pure_stats = []
-            for stat in console.get_stats():
-                if isinstance(stat, rich.text.Text):
-                    pure_stats.append(stat.plain)
-                else:
-                    pure_stats.append(stat)
-            self.log_label.setText(f"{'\n'.join(pure_stats)}\n\n{'\n'.join(self.logs)}")
+
+            if data.games > 0:
+                for stat in console.get_stats():
+                    if isinstance(stat, rich.text.Text):
+                        pure_stats.append(stat.plain)
+                    else:
+                        pure_stats.append(stat)
+
+            self.log_label.setText(
+                f"{'\n'.join(pure_stats)}\nState: {data.current_state}\n\n{'\n'.join(self.logs)}"
+            )
         else:
             self.log_label.setText(
                 f"{'\n'.join(self.welcome_message)}\n\n{'\n'.join(self.logs)}"

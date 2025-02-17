@@ -46,78 +46,74 @@ def loop():
         log(Text("Main menu detected, trying to join killer lobby...", style="red"))
         data.ss.enter_killer_lobby()
 
-    if data.current_state == data.State.INGAME:
-        ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
+    ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
 
-        if any("CONTINUE" in string for string in ocr):
-            if data.game_started_at != None:
-                time_in_game = time() - data.game_started_at
-            else:
-                time_in_game = 0
-
-            pyautogui.click(x=472, y=899)
-            pyautogui.click(x=472, y=899)
-            pyautogui.click(x=472, y=899)
-
-            log("Waiting 15 seconds for XP animation to end")
-
-            sleep(15)
-            log("Trying to get XP")
-            current_xp = data.ss.take_and_read_xp_screenshot()
-
-            if len(current_xp) > 0:
-                current_xp_int = 0
-                try:
-                    current_xp_int = int(current_xp[0])
-                except:
-                    pass
-
-                data.xp += current_xp_int
-            else:
-                predicted_xp = int(time_in_game * 0.9)
-                log(Text("Failed to read XP from screenshot.", style="red"))
-                log(Text(f"Predicted XP gain: {predicted_xp}"))
-                data.xp += predicted_xp
-
-            sleep(1)
-
-            log("Trying to get Bloodpoints")
-            pyautogui.moveTo(411, 900, duration=0.1)
-            pyautogui.click(x=411, y=900)
-            pyautogui.click(x=411, y=900)
-            pyautogui.click(x=411, y=900)
-
-            sleep(5)
-
-            current_bp = data.ss.take_and_read_bloodpoint_screenshot()
-            if len(current_bp) > 0:
-                current_bp_int = 0
-                try:
-                    current_bp_int = int(current_bp[0].replace(" ", ""))
-                except:
-                    pass
-
-                data.bloodpoints += current_bp_int
-
-            log(
-                f"{Text(f'Game {data.games + 1}: Earned XP: {data.xp}, BP: {data.bloodpoints}', style='green')}"
-            )
-
-            data.ss.click_image("src/assets/button_continue.png")
-
-            log("Clicking CONTINUE (endgame)")
-            data.current_state = data.State.INLOBBY
-            data.games += 1
-            data.total_time_in_game += time_in_game
-
-            print_stats()
-
-            log("Setting state to INLOBBY")
-            log("Waiting 15 seconds")
-            sleep(15)
-            log("Finished waiting")
+    if any("CONTINUE" in string for string in ocr):
+        if data.game_started_at != None:
+            time_in_game = time() - data.game_started_at
         else:
-            behavior.perform_ingame_action()
+            time_in_game = 0
+
+        pyautogui.click(x=472, y=899)
+        pyautogui.click(x=472, y=899)
+        pyautogui.click(x=472, y=899)
+
+        log("Waiting 15 seconds for XP animation to end")
+        sleep(15)
+        log("Trying to get XP")
+
+        current_xp = data.ss.take_and_read_xp_screenshot()
+        if len(current_xp) > 0:
+            current_xp_int = 0
+            try:
+                current_xp_int = int(current_xp[0])
+            except:
+                pass
+            data.xp += current_xp_int
+        else:
+            predicted_xp = int(time_in_game * 0.9)
+            log(Text("Failed to read XP from screenshot.", style="red"))
+            log(Text(f"Predicted XP gain: {predicted_xp}"))
+            data.xp += predicted_xp
+
+        sleep(1)
+        log("Trying to get Bloodpoints")
+
+        pyautogui.moveTo(411, 900, duration=0.1)
+        pyautogui.click(x=411, y=900)
+        pyautogui.click(x=411, y=900)
+        pyautogui.click(x=411, y=900)
+
+        sleep(5)
+
+        current_bp = data.ss.take_and_read_bloodpoint_screenshot()
+        if len(current_bp) > 0:
+            current_bp_int = 0
+            try:
+                current_bp_int = int(current_bp[0].replace(" ", ""))
+            except:
+                pass
+            data.bloodpoints += current_bp_int
+
+        log(
+            f"{Text(f'Game {data.games + 1}: Earned XP: {data.xp}, BP: {data.bloodpoints}', style='green')}"
+        )
+
+        data.ss.click_image("src/assets/button_continue.png")
+
+        log("Clicking CONTINUE (endgame)")
+        log("Setting state to INLOBBY")
+
+        data.current_state = data.State.INLOBBY
+        data.games += 1
+        data.total_time_in_game += time_in_game
+
+        print_stats()
+
+        sleep(3)
+
+    if data.current_state == data.State.INGAME:
+        behavior.perform_ingame_action()
 
     elif data.current_state == data.State.PREGAME:
         generators_count = data.ss.take_and_read_generators_left_screenshot()
