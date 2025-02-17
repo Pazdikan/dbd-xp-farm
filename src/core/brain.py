@@ -119,6 +119,17 @@ def loop():
         else:
             behavior.perform_ingame_action()
 
+    elif data.current_state == data.State.PREGAME:
+        generators_count = data.ss.take_and_read_generators_left_screenshot()
+
+        if len(generators_count) > 0 and any(
+            "5" in string for string in generators_count
+        ):
+            data.current_state = data.State.INGAME
+            log("Setting state to INGAME")
+
+            data.game_started_at = time()
+
     else:
         # When you level up your rift, the right expandable menu will cover the play button
         # This moves the mouse on it, then off it, which hides the menu
@@ -148,14 +159,9 @@ def loop():
             data.ss.click_image("src/assets/button_ready.png")
 
             log("Clicking READY in found lobby")
-            data.current_state = data.State.INGAME
-            log("Setting state to INGAME")
-            log("Waiting 120 seconds")
+            data.current_state = data.State.PREGAME
+            log("Setting state to PREGAME")
 
-            sleep(120)  # Loading from lobby to game (+ missing players etc.)
-            log("Finished waiting")
-
-            data.game_started_at = time()
         elif not ocr:
             ocr = data.ss.take_and_read_screenshot(data.ss.endgame_button)
             # Sometimes the game doesn't register the click
@@ -167,6 +173,7 @@ def loop():
                 log("Waiting 30 seconds")
                 sleep(30)
                 log("Finished waiting")
+
         log("Waiting 5 seconds")
         waiting_times += 1
         sleep(5)

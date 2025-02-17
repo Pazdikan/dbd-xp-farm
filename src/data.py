@@ -9,7 +9,7 @@ debug = any(arg in ("--debug", "-d") for arg in sys.argv)
 
 ss = None
 
-State = Enum("State", ["INGAME", "INLOBBY", "INQUEUE"])
+State = Enum("State", ["INGAME", "INLOBBY", "INQUEUE", "PREGAME"])
 Killer = Enum(
     "Killer", ["OTHER", "TRAPPER", "BLIGHT", "DOCTOR", "WRAITH", "DEATHSLINGER"]
 )
@@ -17,7 +17,7 @@ Killer = Enum(
 current_state = State.INLOBBY
 
 if debug:
-    current_state = State.INGAME
+    current_state = State.PREGAME
 
 games = 0
 xp = 0

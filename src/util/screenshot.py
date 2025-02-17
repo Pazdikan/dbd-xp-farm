@@ -81,6 +81,11 @@ class Screenshot:
         image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
         return reader.readtext(np.array(image), detail=0)
 
+    def take_and_read_generators_left_screenshot(self):
+        screenshot = self.sct.grab({"top": 800, "left": 170, "width": 30, "height": 50})
+        image = Image.frombytes("RGB", screenshot.size, screenshot.bgra, "raw", "BGRX")
+        return reader.readtext(np.array(image), detail=0)
+
     def take_and_read_killer_name_screenshot(self):
         if data.config.get("killer_detection", section="general") == "0":
             log(Text(f"Automatic killer detection is turned off", style="blue"))
