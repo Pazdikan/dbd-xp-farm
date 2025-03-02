@@ -1,3 +1,14 @@
+# Easy Anti Cheat detection
+
+> [!CAUTION]
+> Recently another python project (auto skillcheck hitter), which I've been inspired by, has been receiving reports about EAC bans. This is most likely due to how keypresses are sent to the system.
+
+**I'm keeping this repository public for educational purposes only.**
+
+**DO NOT USE THIS SCRIPT EVEN IN CUSTOM GAMES!**
+
+# Old feature description:
+
 ## Key Features
 - ✨ **Anti-AFK System**: Smart movement patterns to prevent disconnection
 - 🛡️ **Anti-Banner Protection**: Handles disconnections and loading screen issues
@@ -45,8 +56,4 @@ For
 
 For
 - Making the [dbd_autoSkillCheck](https://github.com/Manuteaa/dbd_autoSkillCheck) project. Because of it I decided to rewrite this script.
-
-
-## Disclaimer
-While AFK farming hasn't led to widespread bans and can benefit other players through gameplay mechanics, use this script at your own risk. The developer assumes no responsibility for any potential account actions.
 
