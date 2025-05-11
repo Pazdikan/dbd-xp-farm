@@ -1,3 +1,10 @@
+# Well well well
+In the quest update you stopped getting XP by playtime.
+
+This change makes this script useless.
+
+
+
 # Easy Anti Cheat detection
 
 > [!CAUTION]
