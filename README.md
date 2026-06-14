@@ -1,13 +1,10 @@
-# Well well well
-In the quest update you stopped getting XP by playtime.
+# DO NOT USE THIS ANYMORE
 
-This change makes this script useless.
+> [!CAUTION] This script will get you banned
+> This script is bannable if reported by other players, confirmed by support!!! I'M LEAVING THIS PROJECT PUBLIC IN CASE ANYONE WANTS TO TRY FIX IT FOR THEMSELF. DO NOT USE THIS!!!
 
 
-
-# Easy Anti Cheat detection
-
-> [!CAUTION]
+> [!CAUTION] EAC DETECTION
 > Recently another python project (auto skillcheck hitter), which I've been inspired by, has been receiving reports about EAC bans. This is most likely due to how keypresses are sent to the system.
 
 **I'm keeping this repository public for educational purposes only.**
@@ -35,6 +32,8 @@ The script keeps your killer moving and doing their thing to look like a real pl
 | DOCTOR | Static blast and therapy shock |
 
 ## Setup Guide
+
+**THIS IS BANNABLE! IF YOU'RE IMPROVING THE SCRIPT, DON'T USE THIS ON YOUR MAIN ACCOUNT AND PC!**
 
 Please follow [the installation guide](GUIDE.md).
 
