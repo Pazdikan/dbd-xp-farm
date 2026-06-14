@@ -1,11 +1,11 @@
 # DO NOT USE THIS ANYMORE
 
-> [!CAUTION] This script will get you banned
-> This script is bannable if reported by other players, confirmed by support!!! I'M LEAVING THIS PROJECT PUBLIC IN CASE ANYONE WANTS TO TRY FIX IT FOR THEMSELF. DO NOT USE THIS!!!
+> [!CAUTION]
+> **This script will get you banned!** This script is bannable if reported by other players, confirmed by support!!! I'M LEAVING THIS PROJECT PUBLIC IN CASE ANYONE WANTS TO TRY FIX IT FOR THEMSELF. DO NOT USE THIS!!!
 
 
-> [!CAUTION] EAC DETECTION
-> Recently another python project (auto skillcheck hitter), which I've been inspired by, has been receiving reports about EAC bans. This is most likely due to how keypresses are sent to the system.
+> [!CAUTION]
+> **EAC DETECTION:** Recently another python project (auto skillcheck hitter), which I've been inspired by, has been receiving reports about EAC bans. This is most likely due to how keypresses are sent to the system.
 
 **I'm keeping this repository public for educational purposes only.**
 
